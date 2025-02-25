@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  
+  web:
+    #make the web app wait for the db to start
+    depends_on:
+      - db
+    #we are using our local Dockerfile
+    #which has all configuations for svelte that we need
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules #this is to avoid mounting node_modules
+    ports:
+     - "5173:5173"
+    
+    environment:
+      #detect live changes
+      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "dev", "--", "--host"]
+  
+
+volumes:
+    db_data:
+    
