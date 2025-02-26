@@ -34,20 +34,53 @@ A streamline platform that provides an all-in-one solution for property managers
 This section describes the features of the application.
 
 ### Definition of MVP
-*Secure Access Portal*
-  * This MVP focuses on enabling property owners and tenants to securely log in to the application.
+*Secure Owner Login*
+  * Allows property owners to securely log in and access a dashboard showing the status of their rental units.
 
-*Property Management*
-  * This MVP allows property owners to view the status of their rental units and manage them easily from a centralized dashboard.
+*Tenant Account Creation*
+  * Property owners can create accounts for tenants, who receive email invitations and can view relevant property information.
 
-*Maintenance Requests*
-  * This MVP enables tenants to submit maintenance requests and track their status, ensuring issues are addressed promptly.
+*Strong Security Features*
+  * Implements strong password policies and encryption to protect sensitive tenant and property information.
 
-*Payment Management*
-  * This MVP allows tenants to view their payment history, receive reminders about due dates and check outstanding balances.
+*Unit Status Tracking*
+  * Provides a dashboard where property owners can view, filter and sort the status of all their rental units.
+
+*Late Rent Payment Summary*
+  * Display a detailed summary of late rent payments, overdue dates and outstading charges for each tenant.
+
+*Emergency Contact Management*
+  * Tenants can add, edit, delete and view their emergency contacts to keep the information up to date.
+
+*Secure Document Upload*
+  * Property owners can securely upload sensitive documents, ensuring they are only accessible to authorized users.
+
+*Two Factor Authentication (2FA)*
+  * Users can enable 2FA on their accounts for an extra layer of security against unauthorized access.
 
 *Common Area Booking*
-  * This MVP allows property owners to reserve common areas for events and notifies tenants about theses reservations.
+  * Property owners can reserve common areas for events, check for conflicts and notify tenants about the reservations.
+
+*Tenant Portal Access*
+  * Tenants can access the portal to view common area schedules, building maps and register for events.
+
+*Maintenance Operator Work Orders*
+  * Maintenance operators can access work orders, start/completing tasks.
+
+*Completed Work Order Review*
+  * Maintenance managers can review and confirm completed work orders before officially closing them.
+
+*Secure Tenant Login*
+  * Tenants can securely log in and access a dashboard with key apartment details like rules and emergency contacts.
+
+*Maintenance Request Submission*
+  * Tenants can submit maintenance requests, attach images if needed and track the status of their requests.
+
+*Rent Payment History*
+  * Tenants can view their rent payment history and receive reminders about due dates and late fees.
+
+*Current Balance and Upcoming Payments*
+  * Tenants can view their current balance and upcoming payments, including due dates and amounts along with reminders.
 
 ### MVP Features
 >  _Provide a list of top-level Epics and/or Stories of the MVP._
