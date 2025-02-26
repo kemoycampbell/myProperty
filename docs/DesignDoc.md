@@ -37,6 +37,18 @@ This section describes the features of the application.
 *Secure Access Portal*
   * This MVP focuses on enabling property owners and tenants to securely log in to the application.
 
+*Property Management*
+  * This MVP allows property owners to view the status of their rental units and manage them easily from a centralized dashboard.
+
+*Maintenance Requests*
+  * This MVP enables tenants to submit maintenance requests and track their status, ensuring issues are addressed promptly.
+
+*Payment Management*
+  * This MVP allows tenants to view their payment history, receive reminders about due dates and check outstanding balances.
+
+*Common Area Booking*
+  * This MVP allows property owners to reserve common areas for events and notifies tenants about theses reservations.
+
 ### MVP Features
 >  _Provide a list of top-level Epics and/or Stories of the MVP._
 
