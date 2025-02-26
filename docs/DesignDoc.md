@@ -83,7 +83,11 @@ This section describes the features of the application.
   * Tenants can view their current balance and upcoming payments, including due dates and amounts along with reminders.
 
 ### MVP Features
->  _Provide a list of top-level Epics and/or Stories of the MVP._
+*Secure Owner Login*
+  * As a property owner
+I want to be able to log in to the application securely
+so that I can access a dashboard where I can view the status of all my rental units.
+
 
 
 ## Architecture and Design
