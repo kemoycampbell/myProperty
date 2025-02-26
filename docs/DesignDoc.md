@@ -44,7 +44,6 @@ This section describes the features of the application.
 This section describes the application architecture.
 
 ### Software Architecture
-> _Place a architectural diagram here._
 ![This is an image of the architecture](images/architecture.png "Architecture Diagram")
 
 > _Describe your software architecture._
