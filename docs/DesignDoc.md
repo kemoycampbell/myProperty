@@ -35,8 +35,8 @@ This section describes the features of the application.
 
 ### Definition of MVP
 > _Provide a simple description of the Minimum Viable Product._
-> Secure Access Portal
-This MVP focuses on enabling property owners and tenants to securely log in to the application
+*Secure Access Portal*
+  * This MVP focuses on enabling property owners and tenants to securely log in to the application.
 
 ### MVP Features
 >  _Provide a list of top-level Epics and/or Stories of the MVP._
