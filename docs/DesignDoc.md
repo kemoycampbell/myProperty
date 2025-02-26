@@ -88,6 +88,81 @@ This section describes the features of the application.
 I want to be able to log in to the application securely
 so that I can access a dashboard where I can view the status of all my rental units.
 
+*Tenant Account Creation*
+  * As a property owner
+I want to be able to create accounts for my tenants letting them see the different information of the property
+so that they can be informed.
+
+*Strong Security Features*
+  * As a property owner
+I want the applications to have strong security features
+So that tenant and property information are protected.
+
+*Unit Status Tracking*
+  * As a property owner
+I want to track the status of each of my units 
+so that I can easily see which units need my attention.
+
+*Late Rent Payment Summary*
+  * As a property owner
+I want to view a detailed summary of late rent payments, overdue dates, and total outstanding charges for each tenant
+so that I can accurately collect the correct amount due
+
+*Emergency Contact Management*
+  * As a tenant
+	I want to add and update my emergency contact information 
+so that my landlord has accurate and up-to-date details in case of an emergency
+
+*Secure Document Upload*
+  * As a property owner
+I want to securely upload and encrypt documents, ensuring they are only accessible to me and the associated tenant(s), 
+so that sensitive information remains protected and private
+
+*Two Factor Authentication (2FA)*
+  * As a user
+	I want to enable two-factor authentication (2FA) on my account 
+so that my account is protected from unauthorized access
+
+*Common Area Booking*
+  * As property owner
+	I want to reserve specific areas of the building for events that can run from designated	
+	times of day
+So that tenants can be notified when specific areas are reserved
+
+*Tenant Portal Access*
+  * As a tenant
+I want to be able to access the portal 
+so that I can view general building info, such as 
+common area schedules, complex maps, and possible events the complex is hosting.
+
+*Maintenance Operator Work Orders*
+  * As a maintenance manager
+I want to be able to log in securely and access the dashboard displaying all job requests from tenants and owners
+
+*Completed Work Order Review*
+  * As a maintenance operator
+I want to be able to log in securely and access work orders
+so that I can accept and complete work orders, and submit photos.
+
+*Secure Tenant Login*
+  * As a tenant
+I want to be able to log in to the application securely
+so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts and maintenance request tools.
+
+*Maintenance Request Submission*
+  * As a tenant
+I want to submit maintenance requests through the app 
+so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly.
+
+*Rent Payment History*
+  * As a tenant
+I want to view my rent payment history and receive reminders about upcoming due dates or late fees through the app
+so that I can stay on top of my payments and avoid any confusion.
+
+*Current Balance and Upcoming Payments*
+  * As a tenant
+I want to be able to see my current balance and upcoming payments
+so that I can pay my rent on-time.
 
 
 ## Architecture and Design
