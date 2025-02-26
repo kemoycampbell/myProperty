@@ -10,7 +10,7 @@
 * Team name: TEAMNAME
 * Team members
   * Kemoy Campbell
-  * MEMBER2
+  * Jose Palomino
   * MEMBER3
   * MEMBER4
 
