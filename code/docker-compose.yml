@@ -4,21 +4,24 @@ services:
   db:
     image: postgres
     restart: always
+    container_name: postgres_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: myProperty
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   
   web:
     #make the web app wait for the db to start
     depends_on:
       - db
+    container_name: svelte_app
     #we are using our local Dockerfile
     #which has all configuations for svelte that we need
-    build: .
+    build: . #calling the Dockerfile instead of pulling image from docker registery
     volumes:
       - .:/app
       - /app/node_modules #this is to avoid mounting node_modules
