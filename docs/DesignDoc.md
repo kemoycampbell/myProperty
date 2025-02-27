@@ -13,6 +13,7 @@
   * Jose Palomino
   * Michael Ogunwale
   * Michael Berrios
+  * Geoffrey Tse
 
 ## Executive Summary
 
