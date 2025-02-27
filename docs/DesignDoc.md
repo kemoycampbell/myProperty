@@ -239,10 +239,6 @@ This section describes the application architecture.
 ### Software Architecture
 ![This is an image of the architecture](images/architecture.png "Architecture Diagram")
 
-The diagram display an high level view of the platform
-This project is setup using the Model View Controller (MVC) architecture pattern.
-
-
 ### Use Cases
 ![This is an image of the use cases](images/usecases.png "Use Cases")
 
