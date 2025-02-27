@@ -32,7 +32,6 @@ This section describes the features of the application.
 ### Definition of MVP
 The Minimum Viable Product (MVP) is a web-based platform that allows property managers to efficiently manage rental properties, tenants, lease agreements, and maintenance requests. It provides a centralized dashboard to track unit availability, tenant interactions, payment statuses, and maintenance progress. The platform ensures data security through authentication, access control, and encryption, while also offering dedicated portals for property managers, owners, tenants, and maintenance staff to access relevant features and submit requests.
 
-### Definition of MVP
 *Secure Owner Login*
   * Allows property owners to securely log in and access a dashboard showing the status of their rental units.
 
