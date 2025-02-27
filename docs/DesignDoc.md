@@ -206,26 +206,31 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-#### Maintenace Operations
-*Secure Login for Maintenance Manager and Dashboard Access*
-* As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators
+# Maintenance Operations
+
+## Secure Login for Maintenance Manager and Dashboard Access
+* As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators.
   * Secure login with username/password
   * 2FA login if enabled
   * View all job requests with request ID, date submitted, sender, and issue description
   * Ability to assign/unassign work orders to operators
   * Move assigned requests to the "Assigned Work Orders" category
 
-*Secure Login for Maintenance Operator and Work Order Management*
-* As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos
+---
+
+## Secure Login for Maintenance Operator and Work Order Management
+* As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos.
   * Secure login with username/password
   * 2FA login if enabled
   * View assigned work orders with request ID, date assigned, sender, address, and issue description
-  * Ability to start a work order and move it to “In Progress Work Orders.
+  * Ability to start a work order and move it to “In Progress Work Orders”
   * Upload and submit photos for each work order
   * Mark work order as complete and move it to the "Completed Work Orders" category
 
-*Review and Close Completed Work Orders*
-* As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished
+---
+
+## Review and Close Completed Work Orders
+* As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished.
   * Secure login with username/password
   * 2FA login if enabled
   * View all work orders (in progress and completed)
