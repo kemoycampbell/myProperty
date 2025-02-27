@@ -11,7 +11,7 @@
 * Team members
   * Kemoy Campbell
   * Jose Palomino
-  * MEMBER3
+  * Michael Berrios
   * MEMBER4
 
 ## Executive Summary
@@ -32,6 +32,9 @@ A streamline platform that provides an all-in-one solution for property managers
 ## Requirements
 
 This section describes the features of the application.
+
+### Definition of MVP
+The Minimum Viable Product (MVP) is a web-based platform that allows property managers to efficiently manage rental properties, tenants, lease agreements, and maintenance requests. It provides a centralized dashboard to track unit availability, tenant interactions, payment statuses, and maintenance progress. The platform ensures data security through authentication, access control, and encryption, while also offering dedicated portals for property managers, owners, tenants, and maintenance staff to access relevant features and submit requests.
 
 ### Definition of MVP
 *Secure Owner Login*
@@ -83,7 +86,7 @@ This section describes the features of the application.
   * Tenants can view their current balance and upcoming payments, including due dates and amounts along with reminders.
 
 ### MVP Features
-*Secure Owner Login*
+*Secure Owner Login* - 
   * As a property owner
 I want to be able to log in to the application securely
 so that I can access a dashboard where I can view the status of all my rental units.
@@ -164,6 +167,31 @@ so that I can stay on top of my payments and avoid any confusion.
 I want to be able to see my current balance and upcoming payments
 so that I can pay my rent on-time.
 
+#### Maintenace Operations
+*Secure Login for Maintenance Manager and Dashboard Access*
+* As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators
+  * Secure login with username/password
+  * 2FA login if enabled
+  * View all job requests with request ID, date submitted, sender, and issue description
+  * Ability to assign/unassign work orders to operators
+  * Move assigned requests to the "Assigned Work Orders" category
+
+*Secure Login for Maintenance Operator and Work Order Management*
+* As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos
+  * Secure login with username/password
+  * 2FA login if enabled
+  * View assigned work orders with request ID, date assigned, sender, address, and issue description
+  * Ability to start a work order and move it to “In Progress Work Orders.
+  * Upload and submit photos for each work order
+  * Mark work order as complete and move it to the "Completed Work Orders" category
+
+*Review and Close Completed Work Orders*
+* As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished
+  * Secure login with username/password
+  * 2FA login if enabled
+  * View all work orders (in progress and completed)
+  * Review work orders with request ID, issue description, status, operator, completion date, and submitted photos
+  * Close work orders once confirmed as completed
 
 ## Architecture and Design
 This section describes the application architecture.
