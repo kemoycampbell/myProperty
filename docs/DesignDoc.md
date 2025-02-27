@@ -11,7 +11,7 @@
 * Team members
   * Kemoy Campbell
   * Jose Palomino
-  * MEMBER3
+  * Michael Ogunwale
   * MEMBER4
 
 ## Executive Summary
