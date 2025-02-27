@@ -96,86 +96,115 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-*Secure Owner Login* - 
-  * As a property owner
-I want to be able to log in to the application securely
-so that I can access a dashboard where I can view the status of all my rental units.
+## Tenant Account Creation
+* As a property owner, I want to create accounts for my tenants letting them see different property information so that they can be informed.
+  * Ability to create tenant accounts with unique credentials
+  * Assign tenant accounts to specific rental units
+  * Provide tenants access to property details such as rules, emergency contacts, and building info
 
-*Tenant Account Creation*
-  * As a property owner
-I want to be able to create accounts for my tenants letting them see the different information of the property
-so that they can be informed.
+---
 
-*Strong Security Features*
-  * As a property owner
-I want the applications to have strong security features
-So that tenant and property information are protected.
+## Unit Status Tracking
+* As a property owner, I want to track the status of each of my units so that I can easily see which units need my attention.
+  * View all units with their current status (e.g., occupied, vacant, under maintenance)
+  * Filter units by status or tenant name
+  * Receive notifications for units requiring attention
 
-*Unit Status Tracking*
-  * As a property owner
-I want to track the status of each of my units 
-so that I can easily see which units need my attention.
+---
 
-*Late Rent Payment Summary*
-  * As a property owner
-I want to view a detailed summary of late rent payments, overdue dates, and total outstanding charges for each tenant
-so that I can accurately collect the correct amount due
+## Late Rent Payment Summary
+* As a property owner, I want to view a detailed summary of late rent payments, overdue dates, and total outstanding charges for each tenant so that I can accurately collect the correct amount due.
+  * View a summary of late payments with tenant name, overdue dates, and outstanding charges
+  * Generate reports for late payments
+  * Send automated reminders to tenants about overdue payments
 
-*Emergency Contact Management*
-  * As a tenant
-	I want to add and update my emergency contact information 
-so that my landlord has accurate and up-to-date details in case of an emergency
+---
 
-*Secure Document Upload*
-  * As a property owner
-I want to securely upload and encrypt documents, ensuring they are only accessible to me and the associated tenant(s), 
-so that sensitive information remains protected and private
+## Secure Document Upload
+* As a property owner, I want to securely upload and encrypt documents, ensuring they are only accessible to me and the associated tenant(s), so that sensitive information remains protected and private.
+  * Secure document upload feature with encryption
+  * Role-based access to uploaded documents
+  * Organize documents by tenant or unit
 
-*Two Factor Authentication (2FA)*
-  * As a user
-	I want to enable two-factor authentication (2FA) on my account 
-so that my account is protected from unauthorized access
+---
 
-*Common Area Booking*
-  * As property owner
-	I want to reserve specific areas of the building for events that can run from designated	
-	times of day
-So that tenants can be notified when specific areas are reserved
+# Security Features
 
-*Tenant Portal Access*
-  * As a tenant
-I want to be able to access the portal 
-so that I can view general building info, such as 
-common area schedules, complex maps, and possible events the complex is hosting.
+## Strong Security Features
+* As a property owner, I want the application to have strong security features so that tenant and property information are protected.
+  * Data encryption for sensitive information
+  * Role-based access control (owner, tenant, maintenance manager/operator)
+  * Regular security audits and updates
 
-*Maintenance Operator Work Orders*
-  * As a maintenance manager
-I want to be able to log in securely and access the dashboard displaying all job requests from tenants and owners
+---
 
-*Completed Work Order Review*
-  * As a maintenance operator
-I want to be able to log in securely and access work orders
-so that I can accept and complete work orders, and submit photos.
+## Two-Factor Authentication (2FA)
+* As a user, I want to enable two-factor authentication (2FA) on my account so that my account is protected from unauthorized access.
+  * Option to enable/disable 2FA in account settings
+  * Support for email or SMS-based 2FA
+  * Secure login process with 2FA verification
 
-*Secure Tenant Login*
-  * As a tenant
-I want to be able to log in to the application securely
-so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts and maintenance request tools.
+---
 
-*Maintenance Request Submission*
-  * As a tenant
-I want to submit maintenance requests through the app 
-so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly.
+# Tenant Experience
 
-*Rent Payment History*
-  * As a tenant
-I want to view my rent payment history and receive reminders about upcoming due dates or late fees through the app
-so that I can stay on top of my payments and avoid any confusion.
+## Secure Tenant Login
+* As a tenant, I want to log in securely to the application so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts, and maintenance request tools.
+  * Secure login with username/password
+  * 2FA login if enabled
+  * Access to tenant-specific information (e.g., rules, emergency contacts, maintenance tools)
 
-*Current Balance and Upcoming Payments*
-  * As a tenant
-I want to be able to see my current balance and upcoming payments
-so that I can pay my rent on-time.
+---
+
+## Emergency Contact Management
+* As a tenant, I want to add and update my emergency contact information so that my landlord has accurate and up-to-date details in case of an emergency.
+  * Ability for tenants to update emergency contact details via the portal
+  * Secure storage of emergency contact information
+  * Access to emergency contacts for property owners in case of emergencies
+
+---
+
+## Maintenance Request Submission
+* As a tenant, I want to submit maintenance requests through the app so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly.
+  * Submit maintenance requests with issue description and photos
+  * Track the status of submitted requests
+  * Receive notifications about updates or resolutions
+
+---
+
+## Rent Payment History
+* As a tenant, I want to view my rent payment history and receive reminders about upcoming due dates or late fees through the app so that I can stay on top of my payments and avoid any confusion.
+  * View payment history with dates and amounts
+  * Receive reminders for upcoming payments or late fees
+  * Export payment history for personal records
+
+---
+
+## Current Balance and Upcoming Payments
+* As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.
+  * View current balance and upcoming payment due dates
+  * Pay rent directly through the app
+  * Receive confirmation of successful payments
+
+---
+
+## Tenant Portal Access
+* As a tenant, I want to access the portal so that I can view general building info, such as common area schedules, complex maps, and possible events the complex is hosting.
+  * Secure login for tenants
+  * Access to building info (e.g., maps, schedules, events)
+  * View notifications about building updates or events
+
+---
+
+# Common Area Management
+
+## Common Area Booking
+* As a property owner, I want to reserve specific areas of the building for events that can run from designated times of day so that tenants can be notified when specific areas are reserved.
+  * Ability to reserve common areas with date and time slots
+  * Notify tenants about reserved areas via the app
+  * View a calendar of booked areas
+
+---
 
 #### Maintenace Operations
 *Secure Login for Maintenance Manager and Dashboard Access*
