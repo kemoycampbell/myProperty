@@ -117,6 +117,12 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
+## Current Balance and Upcoming Payments
+* As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.
+  * View current balance and upcoming payment due dates
+
+---
+
 # Maintenance Operations
 
 ## Login for Maintenance Manager and Dashboard Access
