@@ -58,6 +58,9 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 *Maintenance Request Submission*
   * Tenants can submit maintenance requests, attach images if needed and track the status of their requests.
 
+*Current Balance and Upcoming Payments*
+  * Tenants can view their current balance and upcoming payments.
+
 ### MVP Features
 # Owner and Property Management
 
