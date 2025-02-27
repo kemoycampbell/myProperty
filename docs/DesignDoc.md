@@ -71,7 +71,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-## Tenant Account Creation
+##### Tenant Account Creation
 * As a property owner, I want to create accounts for my tenants letting them see different property information so that they can be informed.
   * Ability to create tenant accounts with unique credentials
   * Assign tenant accounts to specific rental units
@@ -79,30 +79,30 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-## Unit Status Tracking
+##### Unit Status Tracking
 * As a property owner, I want to track the status of each of my units so that I can easily see which units need my attention.
   * View all units with their current status (e.g., occupied, vacant, under maintenance)
   * Filter units by status or tenant name
 
 ---
 
-## Document Upload
+##### Document Upload
 * As a property owner, I want to securely upload documents, ensuring they are only accessible to me and the associated tenant(s).
   * Document upload
   * Organize documents by tenant or unit
 
 ---
 
-# Tenant Experience
+#### Tenant Experience
 
-## Tenant Login
+##### Tenant Login
 * As a tenant, I want to log in securely to the application so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts, and maintenance request tools.
   * Login with username/password
   * Access to tenant-specific information (e.g., rules, emergency contacts, maintenance tools)
 
 ---
 
-## Emergency Contact Management
+##### Emergency Contact Management
 * As a tenant, I want to add and update my emergency contact information so that my landlord has accurate and up-to-date details in case of an emergency.
   * Ability for tenants to update emergency contact details via the portal
   * Storage of emergency contact information
@@ -110,22 +110,22 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-## Maintenance Request Submission
+##### Maintenance Request Submission
 * As a tenant, I want to submit maintenance requests through the app so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly.
   * Submit maintenance requests with issue description
   * View the status of submitted requests
 
 ---
 
-## Current Balance and Upcoming Payments
+##### Current Balance and Upcoming Payments
 * As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.
   * View current balance and upcoming payment due dates
 
 ---
 
-# Maintenance Operations
+#### Maintenance Operations
 
-## Login for Maintenance Manager and Dashboard Access
+##### Login for Maintenance Manager and Dashboard Access
 * As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators.
   * Login with username/password
   * View all job requests with request ID, date submitted, sender, and issue description
@@ -134,7 +134,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-## Login for Maintenance Operator and Work Order Management
+##### Login for Maintenance Operator and Work Order Management
 * As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos.
   * Login with username/password
   * View assigned work orders with request ID, date assigned, sender, address, and issue description
@@ -144,7 +144,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 
 ---
 
-## Review and Close Completed Work Orders
+##### Review and Close Completed Work Orders
 * As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished.
   * Login with username/password
   * View all work orders (in progress and completed)
