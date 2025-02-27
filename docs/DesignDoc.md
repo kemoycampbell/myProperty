@@ -86,6 +86,16 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
   * Tenants can view their current balance and upcoming payments, including due dates and amounts along with reminders.
 
 ### MVP Features
+# Owner and Property Management
+
+## Secure Owner Login
+* As a property owner, I want to log in securely to the application so that I can access a dashboard where I can view the status of all my rental units.
+  * Secure login with username/password
+  * 2FA login if enabled
+  * View all rental units with unit ID, tenant name, and current status (e.g., occupied, vacant, maintenance needed)
+
+---
+
 *Secure Owner Login* - 
   * As a property owner
 I want to be able to log in to the application securely
