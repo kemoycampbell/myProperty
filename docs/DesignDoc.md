@@ -48,92 +48,50 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 ### MVP Features
 #### Owner and Property Management
 
-##### Owner Login
-* As a property owner, I want to log in securely to the application so that I can access a dashboard where I can view the status of all my rental units.
-  * Login with username/password
-  * View all rental units with unit ID, tenant name, and current status (e.g., occupied, vacant, maintenance needed)
+##### Owner and Property Management
 
----
+| **Feature**               | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
+|---------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Owner Login**            | As a property owner, I want to log in securely to the application so that I can access a dashboard where I can view the status of all my rental units.                | - Login with username/password                                                                                                                                       |
+|                           |                                                                                 | - View all rental units with unit ID, tenant name, and current status (e.g., occupied, vacant, maintenance needed)                                                  |
+| **Tenant Account Creation**| As a property owner, I want to create accounts for my tenants letting them see different property information so that they can be informed.                           | - Ability to create tenant accounts with unique credentials                                                                                                          |
+|                           |                                                                                 | - Assign tenant accounts to specific rental units                                                                                                                    |
+|                           |                                                                                 | - Provide tenants access to property details such as rules, emergency contacts, and building info                                                                   |
+| **Unit Status Tracking**   | As a property owner, I want to track the status of each of my units so that I can easily see which units need my attention.                                          | - View all units with their current status (e.g., occupied, vacant, under maintenance)                                                                               |
+|                           |                                                                                 | - Filter units by status or tenant name                                                                                                                                 |
+| **Document Upload**        | As a property owner, I want to securely upload documents, ensuring they are only accessible to me and the associated tenant(s).                                      | - Document upload                                                                                                                                                    |
+|                           |                                                                                 | - Organize documents by tenant or unit                                                                                                                                |
 
-##### Tenant Account Creation
-* As a property owner, I want to create accounts for my tenants letting them see different property information so that they can be informed.
-  * Ability to create tenant accounts with unique credentials
-  * Assign tenant accounts to specific rental units
-  * Provide tenants access to property details such as rules, emergency contacts, and building info
+##### Tenant
+| **Feature**                           | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
+|---------------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Tenant Login**                      | As a tenant, I want to log in securely to the application so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts, and maintenance request tools. | - Login with username/password                                                                                                                                       |
+|                                       |                                                                                 | - Access to tenant-specific information (e.g., rules, emergency contacts, maintenance tools)                                                                         |
+| **Emergency Contact Management**      | As a tenant, I want to add and update my emergency contact information so that my landlord has accurate and up-to-date details in case of an emergency.                  | - Ability for tenants to update emergency contact details via the portal                                                                                             |
+|                                       |                                                                                 | - Storage of emergency contact information                                                                                                                             |
+|                                       |                                                                                 | - Access to emergency contacts for property owners in case of emergencies                                                                                             |
+| **Maintenance Request Submission**    | As a tenant, I want to submit maintenance requests through the app so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly. | - Submit maintenance requests with issue description                                                                                                                 |
+|                                       |                                                                                 | - View the status of submitted requests                                                                                                                                 |
+| **Current Balance and Upcoming Payments** | As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.                                                     | - View current balance and upcoming payment due dates                                                                                                                 |
 
----
 
-##### Unit Status Tracking
-* As a property owner, I want to track the status of each of my units so that I can easily see which units need my attention.
-  * View all units with their current status (e.g., occupied, vacant, under maintenance)
-  * Filter units by status or tenant name
+##### Maintenance Operations
+| **Feature**                           | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
+|---------------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Login for Maintenance Manager and Dashboard Access** | As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators.                                  | - Login with username/password                                                                                                                                       |
+|                                       |                                                                                 | - View all job requests with request ID, date submitted, sender, and issue description                                                                                |
+|                                       |                                                                                 | - Ability to assign/unassign work orders to operators                                                                                                                 |
+|                                       |                                                                                 | - Move assigned requests to the "Assigned Work Orders" category                                                                                                      |
+| **Login for Maintenance Operator and Work Order Management** | As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos.                                                | - Login with username/password                                                                                                                                       |
+|                                       |                                                                                 | - View assigned work orders with request ID, date assigned, sender, address, and issue description                                                                  |
+|                                       |                                                                                 | - Ability to start a work order and move it to “In Progress Work Orders”                                                                                             |
+|                                       |                                                                                 | - Upload and submit photos for each work order                                                                                                                        |
+|                                       |                                                                                 | - Mark work order as complete and move it to the "Completed Work Orders" category                                                                                   |
+| **Review and Close Completed Work Orders** | As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished.                                   | - Login with username/password                                                                                                                                       |
+|                                       |                                                                                 | - View all work orders (in progress and completed)                                                                                                                    |
+|                                       |                                                                                 | - Review work orders with request ID, issue description, status, operator, completion date, and submitted photos                                                     |
+|                                       |                                                                                 | - Close work orders once confirmed as completed                                                                                                                       |
 
----
-
-##### Document Upload
-* As a property owner, I want to securely upload documents, ensuring they are only accessible to me and the associated tenant(s).
-  * Document upload
-  * Organize documents by tenant or unit
-
----
-
-#### Tenant Experience
-
-##### Tenant Login
-* As a tenant, I want to log in securely to the application so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts, and maintenance request tools.
-  * Login with username/password
-  * Access to tenant-specific information (e.g., rules, emergency contacts, maintenance tools)
-
----
-
-##### Emergency Contact Management
-* As a tenant, I want to add and update my emergency contact information so that my landlord has accurate and up-to-date details in case of an emergency.
-  * Ability for tenants to update emergency contact details via the portal
-  * Storage of emergency contact information
-  * Access to emergency contacts for property owners in case of emergencies
-
----
-
-##### Maintenance Request Submission
-* As a tenant, I want to submit maintenance requests through the app so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly.
-  * Submit maintenance requests with issue description
-  * View the status of submitted requests
-
----
-
-##### Current Balance and Upcoming Payments
-* As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.
-  * View current balance and upcoming payment due dates
-
----
-
-#### Maintenance Operations
-
-##### Login for Maintenance Manager and Dashboard Access
-* As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators.
-  * Login with username/password
-  * View all job requests with request ID, date submitted, sender, and issue description
-  * Ability to assign/unassign work orders to operators
-  * Move assigned requests to the "Assigned Work Orders" category
-
----
-
-##### Login for Maintenance Operator and Work Order Management
-* As a maintenance operator, I want to log in securely and manage work orders, so I can complete tasks and submit photos.
-  * Login with username/password
-  * View assigned work orders with request ID, date assigned, sender, address, and issue description
-  * Ability to start a work order and move it to “In Progress Work Orders”
-  * Upload and submit photos for each work order
-  * Mark work order as complete and move it to the "Completed Work Orders" category
-
----
-
-##### Review and Close Completed Work Orders
-* As a maintenance manager, I want to review completed work orders and close them once confirmed, ensuring tasks are properly finished.
-  * Login with username/password
-  * View all work orders (in progress and completed)
-  * Review work orders with request ID, issue description, status, operator, completion date, and submitted photos
-  * Close work orders once confirmed as completed
 
 ## Architecture and Design
 This section describes the application architecture.
