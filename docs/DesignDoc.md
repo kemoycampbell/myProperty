@@ -2,7 +2,7 @@
 # PROJECT Design Documentation
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Bnbz
 * Team members
   * Kemoy Campbell
   * Jose Palomino
@@ -31,35 +31,19 @@ This section describes the features of the application.
 ### Definition of MVP
 The Minimum Viable Product (MVP) is a web-based platform that allows property managers to efficiently manage rental properties, tenants, lease agreements, and maintenance requests. It provides a centralized dashboard to track unit availability, tenant interactions, payment statuses, and maintenance progress. The platform ensures data security through authentication, access control, and encryption, while also offering dedicated portals for property managers, owners, tenants, and maintenance staff to access relevant features and submit requests.
 
-*Owner Login*
-  * Allows property owners to securely log in and access a dashboard showing the status of their rental units.
+| Feature                            | Description |
+|------------------------------------|-------------|
+| **Owner Login**                    | Allows property owners to securely log in and access a dashboard showing the status of their rental units. |
+| **Tenant Account Creation**        | Property owners can create accounts for tenants, who receive email invitations and can view relevant property information. |
+| **Unit Status Tracking**           | Provides a dashboard where property owners can view, filter, and sort the status of all their rental units. |
+| **Emergency Contact Management**   | Tenants can add, edit, delete, and view their emergency contacts to keep the information up to date. |
+| **Document Upload**                | Property owners can securely upload sensitive documents, ensuring they are only accessible to authorized users. |
+| **Maintenance Operator Work Orders** | Maintenance operators can access work orders, start and complete tasks. |
+| **Completed Work Order Review**    | Maintenance managers can review and confirm completed work orders before officially closing them. |
+| **Tenant Login**                   | Tenants can securely log in and access a dashboard with key apartment details like rules and emergency contacts. |
+| **Maintenance Request Submission** | Tenants can submit maintenance requests, attach images if needed, and track the status of their requests. |
+| **Current Balance and Upcoming Payments** | Tenants can view their current balance and upcoming payments. |
 
-*Tenant Account Creation*
-  * Property owners can create accounts for tenants, who receive email invitations and can view relevant property information.
-
-*Unit Status Tracking*
-  * Provides a dashboard where property owners can view, filter and sort the status of all their rental units.
-
-*Emergency Contact Management*
-  * Tenants can add, edit, delete and view their emergency contacts to keep the information up to date.
-
-*Document Upload*
-  * Property owners can securely upload sensitive documents, ensuring they are only accessible to authorized users.
-
-*Maintenance Operator Work Orders*
-  * Maintenance operators can access work orders, start/completing tasks.
-
-*Completed Work Order Review*
-  * Maintenance managers can review and confirm completed work orders before officially closing them.
-
-*Tenant Login*
-  * Tenants can securely log in and access a dashboard with key apartment details like rules and emergency contacts.
-
-*Maintenance Request Submission*
-  * Tenants can submit maintenance requests, attach images if needed and track the status of their requests.
-
-*Current Balance and Upcoming Payments*
-  * Tenants can view their current balance and upcoming payments.
 
 ### MVP Features
 #### Owner and Property Management
