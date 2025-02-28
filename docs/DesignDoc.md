@@ -60,6 +60,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 | **Document Upload**        | As a property owner, I want to securely upload documents, ensuring they are only accessible to me and the associated tenant(s).                                      | - Document upload                                                                                                                                                    |
 |                           |                                                                                 | - Organize documents by tenant or unit                                                                                                                                |
 
+
 #### Tenant
 | **Feature**                           | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
 |---------------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -71,6 +72,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 | **Maintenance Request Submission**    | As a tenant, I want to submit maintenance requests through the app so that I can report issues with my apartment and track the status of my requests, ensuring that problems are addressed promptly. | - Submit maintenance requests with issue description                                                                                                                 |
 |                                       |                                                                                 | - View the status of submitted requests                                                                                                                                 |
 | **Current Balance and Upcoming Payments** | As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.                                                     | - View current balance and upcoming payment due dates                                                                                                                 |
+
 
 
 #### Maintenance Operations
