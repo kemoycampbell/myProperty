@@ -141,6 +141,32 @@ This section describes the application architecture.
 ### Software Architecture
 ![This is an image of the architecture](images/architecture.png "Architecture Diagram")
 
+#### Software Architecture Pattern: Model-View-Controller (MVC)
+
+The application follows the **Model-View-Controller (MVC)** architecture design pattern, which separates concerns into three distinct components:
+
+1. **Model**
+   - Represents the application's data.
+   - Interacts with the data source to fetch, retrieve, update, or delete data.
+
+2. **Controller**
+   - Acts as the intermediary between the model and the view.
+   - Handles all requests and forwards them to the appropriate service, which contains the business logic.
+   - Returns the request data.
+   - Notifies the model and view of any changes in data.
+
+3. **View**
+   - The user interacts with the application through this UI.
+   - Displays information received from the controller.
+
+#### High-Level Workflow
+
+1. The user interacts with the view.
+2. The controller processes the request, offloads it to the appropriate service for validation, and communicates with the model.
+3. The model queries or updates the database and returns a response.
+4. The controller sends the response back to the view, and the UI is updated accordingly.
+
+
 ### Use Cases
 ![This is an image of the use cases](images/usecases.png "Use Cases")
 
