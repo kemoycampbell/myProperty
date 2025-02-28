@@ -48,8 +48,6 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 ### MVP Features
 #### Owner and Property Management
 
-##### Owner and Property Management
-
 | **Feature**               | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
 |---------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Owner Login**            | As a property owner, I want to log in securely to the application so that I can access a dashboard where I can view the status of all my rental units.                | - Login with username/password                                                                                                                                       |
@@ -62,7 +60,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 | **Document Upload**        | As a property owner, I want to securely upload documents, ensuring they are only accessible to me and the associated tenant(s).                                      | - Document upload                                                                                                                                                    |
 |                           |                                                                                 | - Organize documents by tenant or unit                                                                                                                                |
 
-##### Tenant
+#### Tenant
 | **Feature**                           | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
 |---------------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Tenant Login**                      | As a tenant, I want to log in securely to the application so that I can access a dashboard where I can view key details about my apartment, such as rules, emergency contacts, and maintenance request tools. | - Login with username/password                                                                                                                                       |
@@ -75,7 +73,7 @@ The Minimum Viable Product (MVP) is a web-based platform that allows property ma
 | **Current Balance and Upcoming Payments** | As a tenant, I want to be able to see my current balance and upcoming payments so that I can pay my rent on time.                                                     | - View current balance and upcoming payment due dates                                                                                                                 |
 
 
-##### Maintenance Operations
+#### Maintenance Operations
 | **Feature**                           | **User Story**                                                                 | **Acceptance Criteria**                                                                                                                                               |
 |---------------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Login for Maintenance Manager and Dashboard Access** | As a maintenance manager, I want to log in securely and view job requests on the dashboard, so I can assign work orders to operators.                                  | - Login with username/password                                                                                                                                       |
