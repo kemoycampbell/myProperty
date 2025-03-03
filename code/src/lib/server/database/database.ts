@@ -22,8 +22,8 @@ export default class Database {
             username: user,
             password: password,
             database: database,
-            synchronize: isProduction ? false : true,
-            logging: isProduction ? false : true,
+            synchronize: isProduction,
+            logging: "all",
         })
     }
 

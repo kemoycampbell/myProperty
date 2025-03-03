@@ -14,7 +14,10 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"coverage": "vitest run --coverage"
+		"coverage": "vitest run --coverage",
+		"typeorm": "node --require ts-node/register node_modules/.bin/typeorm",
+		"migration:generate": "typeorm migration:generate -- -n",
+		"migration:run": "npm run typeorm migration:run"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -43,6 +46,9 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"bcryptjs": "^3.0.2",
+		"dotenv": "^16.4.7",
+		"jsonwebtoken": "^9.0.2",
 		"pg": "^8.13.3",
 		"reflect-metadata": "^0.2.2",
 		"sinon": "^19.0.2",
