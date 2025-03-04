@@ -2,13 +2,11 @@
 import 'reflect-metadata';
 import Database from '$lib/server/database/database';
 import { ENTITIES } from '$lib/server/database/entities';
-import type { ServerInit } from '@sveltejs/kit';
+import type { HandleServerError, ServerInit } from '@sveltejs/kit';
 import dotenv from 'dotenv'; 
 import { dbInstance } from '$lib/stores/databaseStore';
-import type { HandleServerError } from '@sveltejs/kit';
-import { UserException } from '$lib/server/exceptions/UserException';
-import { error, json } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit';
+import { UserException } from '$lib/server/exceptions/UserException';
 
 
 export const init: ServerInit = async () => {
@@ -41,18 +39,4 @@ export const init: ServerInit = async () => {
 
 }
 
-export const handle: Handle = async ({ event, resolve }) => {
-  
-	const response = await resolve(event);
-  console.log(response.status);
 
-	// Note that modifying response headers isn't always safe.
-	// Response objects can have immutable headers
-	// (e.g. Response.redirect() returned from an endpoint).
-	// Modifying immutable headers throws a TypeError.
-	// In that case, clone the response or avoid creating a
-	// response object with immutable headers.
-  response.headers.set('Content-Type', 'application/json');
-
-	return response;
-};
