@@ -13,7 +13,7 @@ const service = new AuthenticateService(userRepository);
 export async function GET({ request }) {
     
     //fake create a user
-    await service.register("test2", "password");
+    await service.register("", "password");
     const users = await userRepository.find();
 
     return json(users);

@@ -23,7 +23,7 @@ export default class Database {
             password: password,
             database: database,
             synchronize: isProduction,
-            logging: "all",
+            logging: false
         })
     }
 

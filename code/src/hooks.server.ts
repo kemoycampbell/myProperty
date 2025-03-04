@@ -7,6 +7,8 @@ import dotenv from 'dotenv';
 import { dbInstance } from '$lib/stores/databaseStore';
 import type { HandleServerError } from '@sveltejs/kit';
 import { UserException } from '$lib/server/exceptions/UserException';
+import { error, json } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit';
 
 
 export const init: ServerInit = async () => {
@@ -39,30 +41,18 @@ export const init: ServerInit = async () => {
 
 }
 
-//hook into svelte kit response. We want to show the user the error responses when they are
-//part of the UserException
-export const handleError = ({ error, event }) => {
-    if (event.url.pathname.startsWith('/api')) {
-      try {
-        // Attempt to parse the error response as JSON
-        const jsonError = JSON.parse(error.message);
-        return {
-          message: jsonError.message || 'API Error',
-          code: jsonError.code || 500,
-          // Include other relevant error details from the JSON response
-        };
-      } catch (parseError) {
-        // If JSON parsing fails, return a generic API error
-        return {
-          message: 'An unexpected API error occurred.',
-          code: 500,
-        };
-      }
-    }
+export const handle: Handle = async ({ event, resolve }) => {
   
-    // Let Svelte handle other errors
-    return {
-      message: error.message,
-      stack: import.meta.env.DEV ? error.stack : undefined, // Include stack in dev mode
-    };
-  };
+	const response = await resolve(event);
+  console.log(response.status);
+
+	// Note that modifying response headers isn't always safe.
+	// Response objects can have immutable headers
+	// (e.g. Response.redirect() returned from an endpoint).
+	// Modifying immutable headers throws a TypeError.
+	// In that case, clone the response or avoid creating a
+	// response object with immutable headers.
+  response.headers.set('Content-Type', 'application/json');
+
+	return response;
+};
