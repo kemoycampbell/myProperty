@@ -1,6 +1,7 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import type { IUser } from "./IUser";
 import { BaseEntity } from "../common/BaseEntity";
+import { Role } from "../role/Role";
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -11,4 +12,7 @@ export class User extends BaseEntity implements IUser {
 
     @Column({type: 'varchar'})
     password: string;
+
+    @ManyToOne(()=> Role, (role)=> role.users)
+    role: Role
 }

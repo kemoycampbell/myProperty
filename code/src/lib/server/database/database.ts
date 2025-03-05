@@ -14,8 +14,8 @@ const config: DataSourceOptions = {
     database: process.env.DATABASE_NAME!,
     username: process.env.DATABASE_USER!,
     password: process.env.DATABASE_PASSWORD!,
-    entities: ['src/lib/server/models/entity/**/*.ts'],
-    migrations: ['src/lib/server/database/migrations/**/*.ts'],  // Local migrations directory
+    entities: ENTITIES,
+    migrations: [],  // Local migrations directory
     synchronize: false,
     logging: "all",
 };
