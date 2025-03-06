@@ -59,8 +59,6 @@ jobs:
     # Ensure the application is up (you can add a delay or a health check endpoint)
     - name: Wait for the application to be ready
       run: |
-        sleep 10  # Sleep for 10 seconds to wait for the app to start
-        curl http://localhost:5173  # Make a request to the app
         sleep 5
     # Run tests with coverage
     - name: Run tests with coverage

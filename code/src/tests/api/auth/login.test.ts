@@ -75,7 +75,7 @@ describe('Testing the /api/auth/login endpoing', () => {
 
         //extract the token
         token = res.token;
-        console.log(res);
+        //console.log(res);
 
         const contentType = response.headers.get('content-type');
         expect(contentType).toBe('application/json');
