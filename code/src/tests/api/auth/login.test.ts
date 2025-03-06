@@ -35,7 +35,7 @@ describe('Testing the /api/auth/login endpoing', () => {
     let token:string;
 
     //before we can test a login, we need to add the user
-    beforeEach(async () => {
+    beforeAll(async () => {
 
         let uri = `${endpoint}/register`;
         let payload = {username: user, password: password, role: role };
@@ -123,9 +123,9 @@ describe('Testing the /api/auth/login endpoing', () => {
     });
 
     //clean up the test user
-    afterEach(async () => {
+    afterAll(async () => {
         //delete the user
-        if(token){
+        if(token!="" && token != undefined) {
             console.log('The token is ', token);
             let id = jwt.decodeToken(token).id;
             await fetch(`http://localhost:5173/api/user/${id}`, {
