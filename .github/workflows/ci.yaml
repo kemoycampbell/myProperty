@@ -11,6 +11,16 @@ jobs:
     steps:
     # Checkout the code repository first
     - uses: actions/checkout@v2
+
+    # Install Docker and Docker Compose
+    - name: Install Docker and Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker --version
+        docker-compose --version
     
     # Start the postgres database with docker
     - name: Start the Postgres database with Docker
@@ -19,6 +29,9 @@ jobs:
     # Install dependencies
     - name: Install dependencies
       run: npm install
+
+    - name: run the application
+      run: npm run dev
 
     # Run tests with coverage
     - name: Run tests with coverage
