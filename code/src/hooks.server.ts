@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 import type {ServerInit } from '@sveltejs/kit';
 import database from '$lib/server/database/database';
+import seedRoles from '$lib/server/database/migrations/seedRoles';
 
 
 
@@ -9,12 +10,15 @@ export const init: ServerInit = async () => {
     // You can do things like fetch data or set up a database connection here.
     // This will run on the server each time the app is started, but only once per deployment.
     console.log('Server init');
-
-
-
     ;
-    await database.initialize();
-    database.synchronize()
+    if(!database.isInitialized)
+    {
+        await database.initialize();
+        await database.synchronize()
+        //seed the roles
+        await seedRoles(database);
+    }
+
 
 
 }

@@ -1,17 +1,66 @@
 on: push
 name: CI
+
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
-        run:
-            working-directory: ./code
+      run:
+        working-directory: ./code
+      
+    env:
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_EXPIRATION_TIME: ${{ secrets.JWT_EXPIRATION_TIME }}
+
+
     steps:
+    # Checkout the code repository first
     - uses: actions/checkout@v2
+
+    # Install Docker and Docker Compose
+    - name: Install Docker and Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get remove -y containerd
+        sudo apt-get install -y \
+          ca-certificates \
+          curl \
+          gnupg \
+          lsb-release
+        sudo mkdir -m 0755 -p /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
+        docker --version
+        docker-compose --version
+
+    # Start the Postgres database with Docker
+    - name: Start the Postgres database with Docker
+      run: |
+        docker-compose -f docker-compose-db-only.yaml up -d
+        # Wait for the Postgres container to be fully ready (optional)
+        docker-compose -f docker-compose-db-only.yaml logs -f &
+
+    # Install dependencies
     - name: Install dependencies
       run: npm install
+
+    # Start the application (run in the background)
+    - name: Start the application
+      run: |
+        nohup npm run dev &  # Start the app in the background
+
+    # Run tests with coverage
     - name: Run tests with coverage
       run: npm run coverage
+
+    # Upload coverage to Codecov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
