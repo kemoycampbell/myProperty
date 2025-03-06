@@ -71,9 +71,11 @@ describe('Testing the /api/auth/login endpoing', () => {
 
         //call the endpoint
         let response = await request(uri, payload, method);
+        const res = await response.json();
 
         //extract the token
-        token = (await response.json()).token;
+        token = res.token;
+        console.log(res);
 
         const contentType = response.headers.get('content-type');
         expect(contentType).toBe('application/json');
