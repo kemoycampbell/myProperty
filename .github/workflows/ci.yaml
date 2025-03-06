@@ -21,17 +21,27 @@ jobs:
         sudo chmod +x /usr/local/bin/docker-compose
         docker --version
         docker-compose --version
-    
-    # Start the postgres database with docker
+
+    # Start the Postgres database with Docker
     - name: Start the Postgres database with Docker
-      run: docker-compose -f docker-compose-db-only.yaml up -d
+      run: |
+        docker-compose -f docker-compose-db-only.yaml up -d
+        # Wait for the Postgres container to be fully ready (optional)
+        docker-compose -f docker-compose-db-only.yaml logs -f &
 
     # Install dependencies
     - name: Install dependencies
       run: npm install
 
-    - name: run the application
-      run: npm run dev
+    # Start the application (run in the background)
+    - name: Start the application
+      run: |
+        nohup npm run dev &  # Start the app in the background
+
+    # Ensure the application is up (you can add a delay or a health check endpoint)
+    - name: Wait for the application to be ready
+      run: |
+        sleep 10  # Sleep for 10 seconds to wait for the app to start
 
     # Run tests with coverage
     - name: Run tests with coverage
