@@ -8,7 +8,8 @@ export function processAPIRequest(handler: Function) {
         } catch (error) {
             console.log(error);
             let status = 500;
-            let message = "An unknown error occurred";
+            //let message = "An unknown error occurred";
+            let message = (error as Error).message;
             if (error instanceof UserException) {
                 status = error.status;
                 message = error.message;
