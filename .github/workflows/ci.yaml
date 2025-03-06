@@ -56,10 +56,6 @@ jobs:
       run: |
         nohup npm run dev &  # Start the app in the background
 
-    # Ensure the application is up (you can add a delay or a health check endpoint)
-    - name: Wait for the application to be ready
-      run: |
-        sleep 5
     # Run tests with coverage
     - name: Run tests with coverage
       run: npm run coverage
