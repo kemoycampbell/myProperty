@@ -1,6 +1,5 @@
 import type { RoleType } from "$lib/server/models/entity/role/Role";
 import { describe, it, expect, beforeAll, afterAll, afterEach, beforeEach } from "vitest";
-import dotenv from "dotenv";
 import jwt from "$lib/server/jwt/jwt";
 
 //a helper function that can takes a endpoint, payload, method and return the response
@@ -35,7 +34,7 @@ describe('Testing the /api/auth/login endpoing', () => {
     let token:string;
 
     //before we can test a login, we need to add the user
-    beforeAll(async () => {
+    beforeEach(async () => {
 
         let uri = `${endpoint}/register`;
         let payload = {username: user, password: password, role: role };
@@ -63,6 +62,7 @@ describe('Testing the /api/auth/login endpoing', () => {
 
     });
 
+    //This will authenticate a user and ensure that we have a token and status 200
     it('should return a 200 status code  and authorize token when the user is authenticated', async () => {
         //setup the login endpoint and payload
         let uri = `${endpoint}/login`;
@@ -88,6 +88,7 @@ describe('Testing the /api/auth/login endpoing', () => {
         expect(decoded.id).toBeDefined();
     });
 
+    //This will test for when user try to authenticate with invalid credential
     it('should return a 401 and error message when the user try to authenticate with invalid credential', async () => {
         //setup the login endpoint and payload
         let uri = `${endpoint}/login`;
@@ -106,6 +107,7 @@ describe('Testing the /api/auth/login endpoing', () => {
         expect(data.error).toBe("Invalid credential");
     });
 
+    //this will test for when password is empty
     it('should return a 401 and error message when the user try to login without a username or password', async () => {
         //setup the login endpoint and payload
         let uri = `${endpoint}/login`;
@@ -125,7 +127,7 @@ describe('Testing the /api/auth/login endpoing', () => {
     });
 
     //clean up the test user
-    afterAll(async () => {
+    afterEach(async () => {
         //delete the user
         if(token!="" && token != undefined) {
             console.log('The token is ', token);
