@@ -5,7 +5,7 @@ import type { RoleType } from "../models/entity/role/Role";
 import jwt from "../jwt/jwt";
 import type { IUser } from "../models/entity/User/IUser";
 
-export class AuthenticateService {
+export class UserService {
     private readonly PASSWORD_SALT_ROUNDS = 10;
     private readonly UNAUTHORIZED_STATUS = 401;
 
@@ -14,7 +14,13 @@ export class AuthenticateService {
         this.repository = repository;
     }
 
-    
+    /**
+     * This method takes a username and password then attempt to authenticate the user
+     * If the user is authenticated, a jwt token is returned else an exception is thrown
+     * @param username 
+     * @param password 
+     * @returns 
+     */
     async authenticate(username: string, password: string): Promise<string> 
     {
         if(!username || !password) {
@@ -23,6 +29,7 @@ export class AuthenticateService {
 
         //attempt to find the username. UserException will be thrown if the username is not found
         const user = await this.repository.findByUsername(username);
+        console.log(user);
 
         //compare the password hashes
         const match = await bcrypt.compare(password, user.password);
@@ -31,10 +38,22 @@ export class AuthenticateService {
             throw new UserException("Invalid credential", this.UNAUTHORIZED_STATUS);
         }
 
+        const payload  = {
+            username: user.username,
+            id: user.id,
+        }
+
         //return a jwt generated token for the user
-        return jwt.generate(user);
+        return jwt.generate(payload);
     }
 
+    /**
+     * This method takes username, password, role and register the user to the system
+     * @param username 
+     * @param password 
+     * @param role 
+     * @returns 
+     */
     async register(username: string, password: string, role:RoleType):Promise<string> 
     {
         if(!username || !password) {
@@ -63,5 +82,12 @@ export class AuthenticateService {
         if(!res)
             throw new UserException(`User with id ${id} not found`, 404);
         return res;
+    }
+
+    //for now we will just delete. But we will need to perform some
+    //type of validation when deleting a user
+    async delete(id: string): Promise<boolean> {
+        const res = await this.repository.delete({ id: id });
+        return res.affected !== null && res.affected === 1;
     }
 }

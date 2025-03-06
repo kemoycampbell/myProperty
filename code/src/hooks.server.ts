@@ -11,10 +11,14 @@ export const init: ServerInit = async () => {
     // This will run on the server each time the app is started, but only once per deployment.
     console.log('Server init');
     ;
-    await database.initialize();
-    await database.synchronize()
-    //seed the roles
-    await seedRoles(database);
+    if(!database.isInitialized)
+    {
+        await database.initialize();
+        await database.synchronize()
+        //seed the roles
+        await seedRoles(database);
+    }
+
 
 
 }

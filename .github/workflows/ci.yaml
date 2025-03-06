@@ -1,17 +1,30 @@
 on: push
 name: CI
+
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
-        run:
-            working-directory: ./code
+      run:
+        working-directory: ./code
+
     steps:
+    # Checkout the code repository first
     - uses: actions/checkout@v2
+    
+    # Start the postgres database with docker
+    - name: Start the Postgres database with Docker
+      run: docker-compose -f docker-compose-db-only.yaml up -d
+
+    # Install dependencies
     - name: Install dependencies
       run: npm install
+
+    # Run tests with coverage
     - name: Run tests with coverage
       run: npm run coverage
+
+    # Upload coverage to Codecov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:

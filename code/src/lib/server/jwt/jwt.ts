@@ -17,4 +17,8 @@ export function verifyToken(token:string):boolean{
     }
 }
 
-export default {generate,verifyToken};
+export function decodeToken(token:string):any{
+    return jwt.decode(token);
+}
+
+export default {generate,verifyToken, decodeToken};
