@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import { UserException } from "../exceptions/UserException";
 import type { IUserRepository } from "../repositories/User/IUserRepository";
-import { User } from "../models/entity/User/User";
+import type { RoleType } from "../models/entity/role/Role";
+import jwt from "../jwt/jwt";
+import type { IUser } from "../models/entity/User/IUser";
 
 export class AuthenticateService {
     private readonly PASSWORD_SALT_ROUNDS = 10;
@@ -23,28 +25,43 @@ export class AuthenticateService {
         const user = await this.repository.findByUsername(username);
 
         //compare the password hashes
-        const passwordHash = await bcrypt.hash(password, this.PASSWORD_SALT_ROUNDS);
-
         const match = await bcrypt.compare(password, user.password);
         
         if(!match) {
             throw new UserException("Invalid credential", this.UNAUTHORIZED_STATUS);
         }
 
-        return "token";
+        //return a jwt generated token for the user
+        return jwt.generate(user);
     }
 
-    async register(username: string, password: string):Promise<string>
+    async register(username: string, password: string, role:RoleType):Promise<string> 
     {
         if(!username || !password) {
             throw new UserException("Username and password are required", 400);
         }
+        if(!role) {
+            throw new UserException("Role is required", 400);
+        }
+
         //hash the password
         password = await bcrypt.hash(password, this.PASSWORD_SALT_ROUNDS);
 
         const user = {username: username, password: password};
         await this.repository.save(user);
 
-        return "token generated"
+        //return a jwt generated token for the user
+        return jwt.generate(user);
+    }
+
+    async getByUsername(username:string):Promise<IUser>{
+        return await this.repository.findByUsername(username);
+    }
+
+    async getById(id:string):Promise<IUser>{
+        const res = await this.repository.findOne({ where: { id } });
+        if(!res)
+            throw new UserException(`User with id ${id} not found`, 404);
+        return res;
     }
 }

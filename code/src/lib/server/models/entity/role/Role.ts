@@ -1,4 +1,4 @@
-import { Column, OneToMany } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import type { IRole } from "./IRole";
 import { User } from "../User/User";
@@ -11,6 +11,7 @@ export enum RoleType
     MAINTENANCE_OPERATOR="maintenance operator"
 
 }
+@Entity()
 export class Role extends BaseEntity implements IRole
 {
     @Column({

@@ -1,15 +1,15 @@
 import { UserException } from "$lib/server/exceptions/UserException";
 import type { IUser } from "$lib/server/models/entity/User/IUser";
 import { User } from "$lib/server/models/entity/User/User";
-import { EntityManager, Repository } from "typeorm";
+import { EntityManager, Repository, type QueryRunner } from "typeorm";
 
 export class UserRepository extends Repository<IUser>
 {
     private readonly NOT_FOUND_STATUS:number = 404;
     //pass the source through the constructor
-    constructor(source: EntityManager)
+    constructor(source: QueryRunner)
     {
-        super(User, source);
+        super(User, source.manager);
     }
     
     /**

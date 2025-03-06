@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 import type {ServerInit } from '@sveltejs/kit';
 import database from '$lib/server/database/database';
+import seedRoles from '$lib/server/database/migrations/seedRoles';
 
 
 
@@ -11,7 +12,9 @@ export const init: ServerInit = async () => {
     console.log('Server init');
     ;
     await database.initialize();
-    database.synchronize()
+    await database.synchronize()
+    //seed the roles
+    await seedRoles(database);
 
 
 }
