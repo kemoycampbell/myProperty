@@ -16,8 +16,8 @@ const config: DataSourceOptions = {
     password: process.env.DATABASE_PASSWORD!,
     entities: ENTITIES,
     migrations: [],  // Local migrations directory
-    synchronize: false,
-    logging: "all",
+    synchronize: true,
+    logging: true
 };
 
 export default new DataSource({

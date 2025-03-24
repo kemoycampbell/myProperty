@@ -14,7 +14,6 @@ export const init: ServerInit = async () => {
     if(!database.isInitialized)
     {
         await database.initialize();
-        await database.synchronize()
         //seed the roles
         await seedRoles(database);
     }

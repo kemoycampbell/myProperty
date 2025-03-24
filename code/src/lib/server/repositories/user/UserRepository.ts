@@ -29,7 +29,10 @@ export class UserRepository extends Repository<IUser>
     }
     async findByUsername(username: string): Promise<IUser>
     {
-        const result = await this.findOne({ where: { username } });
+        const result = await this.findOne({ 
+            where: { username },
+            relations: ['role']
+        });
         if(!result)
         {
            throw new UserException(`User with username ${username} not found`, this.NOT_FOUND_STATUS);

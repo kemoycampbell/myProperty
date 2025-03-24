@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import type { IRole } from "./IRole";
 import { User } from "../User/User";
@@ -20,8 +20,5 @@ export class Role extends BaseEntity implements IRole
         unique:true
     })
     name:RoleType
-
-    @OneToMany(()=>User, (user)=> user.role)
-    users:User[];
 
 }

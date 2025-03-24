@@ -1,12 +1,14 @@
 import { UserException } from '$lib/server/exceptions/UserException';
-import { UserRepository } from '$lib/server/repositories/User/UserRepository';
+import { UserRepository } from '$lib/server/repositories/user/UserRepository';
+import { RoleRepository } from '$lib/server/repositories/role/RoleRepository';
 import { UserService } from '$lib/server/services/userService';
 import { json } from '@sveltejs/kit';
 import { processAPIRequest } from '../../../../middleware/apiResponse';
 import database from '$lib/server/database/database';
 
 const userRepository = new UserRepository(database.createQueryRunner());
-const service = new UserService(userRepository);
+const roleRepository = new RoleRepository(database.createQueryRunner());
+const service = new UserService(userRepository, roleRepository);
 
 // POST /api/user/
 /**
