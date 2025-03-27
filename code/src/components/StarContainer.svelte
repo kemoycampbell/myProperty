@@ -12,7 +12,7 @@
 	}
 
 	#star-pattern {
-		background-image: url('/images/sound.png');
+		background-image: url('/images/myBuilding.png');
 		background-size: 10%;
 
 		position: absolute;

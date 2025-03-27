@@ -9,9 +9,17 @@
 {#if showModal}
 	<div id="modal-wrapper">
 		<div id="modal">
-			<p>Save progress?</p>
-			<button on:click={closeModal}>Back</button>
-			<button>OK</button>
+			<p class="text-light">Would You like to see the buildings?</p>
+			<div class="row">
+				<div class="col">
+					<button class="btn btn-light" on:click={closeModal}>Back</button>
+				</div>
+				<div class="col">
+					<button class="btn btn-light">OK</button>
+				</div>
+			</div>
+			
+			
 		</div>
 	</div>
 {/if}

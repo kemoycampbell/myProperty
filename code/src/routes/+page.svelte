@@ -3,6 +3,7 @@
 	import StripeContainer from '../components/StripeContainer.svelte';
 	import Modal from '../components/Modal.svelte';
 	console.log('Rendering +page.svelte');
+	
 </script>
 
 {#if true}
