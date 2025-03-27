@@ -1,5 +1,8 @@
 import { UserException } from "$lib/server/exceptions/UserException";
+import type { IProperty } from "$lib/server/models/entity/property/IProperty";
 import { Role, RoleType } from "$lib/server/models/entity/role/Role";
+import type { ITenant } from "$lib/server/models/entity/Tenant/ITenant";
+import type { IUnit } from "$lib/server/models/entity/unit/IUnit";
 import type { IUser } from "$lib/server/models/entity/User/IUser";
 import type { RoleRepository } from "$lib/server/repositories/role/RoleRepository";
 import type { TenantRepository } from "$lib/server/repositories/tenant/tenantRepository";
@@ -7,7 +10,7 @@ import type { UnitRepository } from "$lib/server/repositories/unit/unitRepositor
 import type { UserRepository } from "$lib/server/repositories/user/UserRepository";
 import { TenantService } from "$lib/server/services/tenantService";
 import { UserService } from "$lib/server/services/userService";
-import { describe,beforeEach, vi, it, expect } from "vitest";
+import { describe,beforeEach, vi, it, expect, type Mock } from "vitest";
 
 
 describe("TenantService Tests", () => {
@@ -150,22 +153,64 @@ describe("TenantService Tests", () => {
 
     });
 
+    describe("Test getTenantById", () => {
+        it("should throw an error if id is not provided", async () => {
+            //pass the data to the function and store the promise without invoking it
+            const getTenantById = tenantService.getTenantById("");
+        
+            //Assert and invoke the promise
+            await expect(getTenantById).rejects.toThrow(UserException);
+            await expect(getTenantById).rejects.toThrowError("id is required");
+        });
 
-    // it('should successfully create a tenant account', async () => {
+        it('should return a matching tenant', async () => {
 
-    //     const firstName = fakeUser.firstName
-    //     const lastName = fakeUser.lastName
-    //     const email = fakeUser.email
-    //     const username = fakeUser.username
-    //     const password = fakeUser.password
-    
-    //     //pass the data to the function and invoke it
-    //     const result = await tenantService.createTenantAccount(firstName, lastName, email, username, password);
+            // Define a mock property to be associated with the tenant
+            const fakeProperty: IProperty = {
+                name: "myProperty",
+                owner: fakeUser,
+                id: "123456",
+                address_line1: "1234 test st",
+                address_line2: "Apt 101",
+                city: "test",
+                state: "test",
+                zip: "12345",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
 
-    //     //Assert
-    //     expect(result).toBeDefined();
-    //     expect(result).toBeTypeOf("string");
+            // Define a mock unit within the property
+            const unit: IUnit = {
+                id: "unit123",
+                number: 101,
+                property: fakeProperty,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
 
-    // });
+            // Define a mock tenant with an associated unit and property
+            const fakeTenant: ITenant = {
+                id: "123456",
+                property: fakeProperty, // Reuse the previously defined property
+                tenant: fakeUser,
+                startDate: new Date(),
+                endDate: new Date(),
+                unit: unit,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+
+            // Mock the tenant repository's findOne method to return the fake tenant
+            (tenantRepository.findOne as Mock).mockResolvedValue(fakeTenant);
+
+            // Call the service method and verify that it returns the expected tenant
+            const result = await tenantService.getTenantById("123456");
+            expect(result).toEqual(fakeTenant); 
+        });
+
+    });
+
+
+
 
 });
