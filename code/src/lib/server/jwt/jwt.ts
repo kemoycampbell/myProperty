@@ -1,15 +1,26 @@
-const SECRET:string = process.env.JWT_SECRET!;
-const EXPIRATION_TIME:string = process.env.JWT_EXPIRATION_TIME!;
 import jwt from 'jsonwebtoken';
 import { UserException } from '../exceptions/UserException';
 
-export function generate(payload:any):string{
-    return jwt.sign(payload,SECRET,{expiresIn:EXPIRATION_TIME});
+export function generate(payload:any, secret:string =process.env.JWT_SECRET!,expire:string=process.env.JWT_EXPIRATION_TIME!):string{
+    if(!secret){
+        throw new Error("SECRET missing from the env");
+    }
+
+    if(!expire){
+        throw new Error("EXPIRATION_TIME missing from the env");
+    }
+
+    return jwt.sign(payload,secret,{expiresIn:expire});
 }
 
-export function verifyToken(token:string):boolean{
+export function verifyToken(token:string,secret:string =process.env.JWT_SECRET!):boolean{
+
+    if(!secret){
+        throw new Error("SECRET missing from the env");
+    }
+
     try{
-        jwt.verify(token,SECRET);
+        jwt.verify(token,secret);
         return true;
     }
     catch(e){

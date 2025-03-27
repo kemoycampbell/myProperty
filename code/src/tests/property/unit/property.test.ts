@@ -158,5 +158,41 @@ describe("PropertyService Tests", () => {
         const res = await propertyService.createProperty(property);
 
         expect(res).toEqual(fakeProperty);
-    })
+    });
+
+    describe("Test getPropertyById", () => {
+
+        it("should throw an error if id is not provided", async () => {
+            //pass the data to the function and store the promise without invoking it
+            const getPropertyById = propertyService.getPropertyById("");
+        
+            //Assert and invoke the promise
+            await expect(getPropertyById).rejects.toThrow(UserException);
+            await expect(getPropertyById).rejects.toThrowError("id is required");
+        });
+
+        it('should return a matching property', async () => {
+
+            // Define a mock property
+            const fakeProperty: IProperty = {
+                name: "myProperty",
+                owner: fakePropertyOwner,
+                id: "123456",
+                address_line1: "1234 test st",
+                address_line2: "Apt 101",
+                city: "test",
+                state: "test",
+                zip: "12345",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+
+            // Mock the property repository's findOne method to return the fake property
+            (propertyRepository.findOne as Mock).mockResolvedValue(fakeProperty);
+
+            // Call the service method and verify that it returns the expected property
+            const result = await propertyService.getPropertyById("123456");
+            expect(result).toEqual(fakeProperty); 
+        });
+    });
 });

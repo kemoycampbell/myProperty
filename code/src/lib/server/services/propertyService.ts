@@ -31,6 +31,9 @@ export class PropertyService {
     }
 
     async getPropertyById(id: string): Promise<IProperty> {
+        if(!id) {
+            throw new UserException("id is required", 400);
+        }
         const res = await this.propertyRepository.findOne({where: {id: id}});
         if(!res) {
             throw new UserException("Property not found", 404);
