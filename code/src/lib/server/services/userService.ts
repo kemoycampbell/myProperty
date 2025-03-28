@@ -36,6 +36,10 @@ export class UserService {
         const user = await this.repository.findByUsername(username);
         //console.log(user);
 
+        if(!user) {
+            throw new UserException("Invalid credential", this.UNAUTHORIZED_STATUS);
+        }
+
         //compare the password hashes
         const match = await bcrypt.compare(password, user.password);
         
