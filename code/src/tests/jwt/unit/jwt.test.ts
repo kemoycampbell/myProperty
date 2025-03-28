@@ -35,7 +35,11 @@ describe("JWT Tests", () => {
 
     //throw an error if secret is not provided
     it('should throw an error if secret is not provided', async () => {
-        expect(()=>jwt.generate(payload)).toThrowError("SECRET missing from the env");
+        expect(()=>jwt.generate(payload, "", expire)).toThrowError("SECRET missing from the env");
+    });
+
+    it('should throw an error if the expire is not provided', async () => {
+        expect(()=>jwt.generate(payload, secret, "")).toThrowError("EXPIRATION_TIME missing from the env");
     });
 
     //successfully generate a string of token
