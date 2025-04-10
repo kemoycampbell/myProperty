@@ -11,6 +11,7 @@ export enum RoleType
     MAINTENANCE_OPERATOR="maintenance operator"
 
 }
+
 @Entity()
 export class Role extends BaseEntity implements IRole
 {
@@ -20,5 +21,4 @@ export class Role extends BaseEntity implements IRole
         unique:true
     })
     name:RoleType
-
 }
