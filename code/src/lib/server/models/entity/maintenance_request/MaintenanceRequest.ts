@@ -6,7 +6,7 @@ import type { IMaintenanceRequest } from "./IMaintenanceRequest";
 export class MaintenanceRequest extends BaseEntity implements IMaintenanceRequest {
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'user_requested_id'
     })
 
@@ -14,7 +14,7 @@ export class MaintenanceRequest extends BaseEntity implements IMaintenanceReques
 
     @Column({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'unit_id' 
     })
 

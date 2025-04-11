@@ -1,12 +1,13 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import type { IMaintenanceRequestStatus } from "./IMaintenanceRequestStatus";
+import { MaintenanceStatus } from "../maintenance_status/MaintenanceStatus";
 
 @Entity()
 export class MaintenanceRequestStatus extends BaseEntity implements IMaintenanceRequestStatus {
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'maintenance_request_id'
     })
 
@@ -14,7 +15,7 @@ export class MaintenanceRequestStatus extends BaseEntity implements IMaintenance
 
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'user_operator_id'
     })
 
@@ -22,9 +23,11 @@ export class MaintenanceRequestStatus extends BaseEntity implements IMaintenance
 
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'status'
     })
 
-    status: string
+    @ManyToOne(()=> MaintenanceStatus, (status) => status.id)
+    @JoinColumn()
+    status: MaintenanceStatus
 }

@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import type {ServerInit } from '@sveltejs/kit';
 import database from '$lib/server/database/database';
 import seedRoles from '$lib/server/database/migrations/seedRoles';
+import seedMaintenanceStatus from '$lib/server/database/migrations/seedMaintenanceStatus';
 
 
 
@@ -16,6 +17,7 @@ export const init: ServerInit = async () => {
         await database.initialize();
         //seed the roles
         await seedRoles(database);
+        await seedMaintenanceStatus(database);
     }
 
 

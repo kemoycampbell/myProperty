@@ -6,7 +6,7 @@ import type { IMaintenanceRequestPhoto } from "./IMaintenanceRequestPhoto";
 export class MaintenanceRequestPhoto extends BaseEntity implements IMaintenanceRequestPhoto {
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'maintenance_request_id'
     })
 
@@ -14,7 +14,7 @@ export class MaintenanceRequestPhoto extends BaseEntity implements IMaintenanceR
 
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'maintenance_request_status_id'
     })
 
@@ -22,7 +22,7 @@ export class MaintenanceRequestPhoto extends BaseEntity implements IMaintenanceR
 
     @Column ({
         type: 'varchar',
-        length: 35,
+        length: 40,
         name: 'user_uploaded_id'
     })
 
