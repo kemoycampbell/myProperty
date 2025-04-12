@@ -43,8 +43,21 @@
         goto(`/dashboard/owner/properties/${id}/edit`);
     }
 
-    function deleteProperty(id) {
-        console.log(`property ${id} deleted`);
+    async function deleteProperty(id) {
+        try {
+            const res = await fetch(`/api/property/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!res.ok) {
+                throw new Error(`Failed to delete property: ${res.status}`);
+            }
+            
+            properties = properties.filter(property => property.id !== id);
+            console.log(`Property with id ${id} deleted successfully`);
+        } catch (error) {
+            console.error("Error deleting property:", error);
+        }
     }
 </script>
 
