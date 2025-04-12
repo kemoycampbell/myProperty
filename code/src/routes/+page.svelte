@@ -1,21 +1,40 @@
 <script>
 	import { goto } from "$app/navigation";
 
-	let email = '';
+	let username = '';
 	let password = '';
 
-	function handleLogin() {
-		goto('/dashboard/owner/properties')
+	async function handleLogin() {
+		const res = await fetch('http://localhost:5173/api/auth/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username,
+				password
+			})
+		});
+
+		if (res.ok) {
+			const { token } = await res.json();
+
+			localStorage.setItem('token', token);
+			
+			goto('/dashboard/owner/properties');
+		} else {
+			console.error('Login failed');
+		}
 	}
 </script>
 
 <div>
-	<h1>THIS IS THE LOGIN</h1>
+	<h1>Login</h1>
 
 	<form on:submit|preventDefault={handleLogin}>
 		<label>
 			Username:
-			<input bind:value={email} required />
+			<input type="text" bind:value={username} required />
 		</label>
 		<br />
 

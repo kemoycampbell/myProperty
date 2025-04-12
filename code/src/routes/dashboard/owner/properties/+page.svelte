@@ -7,6 +7,15 @@
         { id: 3, name: "Beach Apartment" }
     ];
 
+    function decodeJWT(token) {
+        const payload = token.split('.')[1];
+        return JSON.parse(atob(payload));
+    }
+
+    const token = localStorage.getItem('token');
+    const userInfo = decodeJWT(token);
+    console.log('User info:', userInfo);
+
     function goToDetails(id) {
         goto(`/dashboard/owner/properties/${id}`);
     };
