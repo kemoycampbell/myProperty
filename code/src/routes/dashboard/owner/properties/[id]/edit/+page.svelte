@@ -41,12 +41,12 @@
     });
 
 	function handleSubmit() {
-        goto('/dashboard/owner');
+        goto('/dashboard/owner/properties');
 	}
     
 </script>
 
-<h1>Edit Property</h1>
+<span>Edit Property</span>
 
 <form on:submit|preventDefault={handleSubmit}>
 	<label>

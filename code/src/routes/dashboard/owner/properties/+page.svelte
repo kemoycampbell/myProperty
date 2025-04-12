@@ -8,11 +8,11 @@
     ];
 
     function goToDetails(id) {
-        goto(`/dashboard/owner/${id}`);
+        goto(`/dashboard/owner/properties/${id}`);
     };
 
     function goToEdit(id) {
-        goto(`/dashboard/owner/${id}/edit`);
+        goto(`/dashboard/owner/properties/${id}/edit`);
     }
 
     function deleteProperty(id) {
@@ -21,10 +21,8 @@
 </script>
 
 <div>
-    <h2>Welcome, Owner</h2>
-    <p>Properties:</p>
-
-    <button on:click={() => goto('/dashboard/owner/add')}>Add</button>
+    <p>List of properties</p>
+    <button on:click={() => goto('/dashboard/owner/properties/add')}>Add</button>
 
     <ul>
         {#each properties as property}

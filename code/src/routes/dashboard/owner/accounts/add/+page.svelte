@@ -2,15 +2,15 @@
 	import { goto } from "$app/navigation";
 
 	let name = '';
-	let location = '';
-	let price = '';
+	let username = '';
+	let password = '';
 
 	function handleSubmit() {
-        goto('/dashboard/owner');
+        goto('/dashboard/owner/accounts');
 	}
 </script>
 
-<h1>Add New Property</h1>
+<span>Add account</span>
 
 <form on:submit|preventDefault={handleSubmit}>
 	<label>
@@ -20,16 +20,16 @@
 	<br />
 
 	<label>
-		Location:
-		<input bind:value={location} required />
+		Username:
+		<input bind:value={username} required />
 	</label>
 	<br />
 
 	<label>
-		Price:
-		<input type="number" bind:value={price} required />
+		Password:
+		<input type="password" bind:value={password} required />
 	</label>
 	<br />
 
-	<button type="submit">Create Property</button>
+	<button type="submit">Create Account</button>
 </form>

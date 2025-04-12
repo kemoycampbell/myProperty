@@ -25,9 +25,9 @@
 </script>
 
 <div>
-    <h2>{property.name}</h2>
+    <span>{property.name}</span>
     <p><strong>Address:</strong> {property.address}</p>
     <p><strong>Type:</strong> {property.type}</p>
     <p><strong>Status:</strong> {property.status}</p>
-    <a href="/dashboard/owner">Back to Property List</a>
+    <a href="/dashboard/owner/properties">Back to Property List</a>
 </div>
