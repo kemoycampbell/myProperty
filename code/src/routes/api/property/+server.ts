@@ -32,8 +32,3 @@ export const POST = processAPIRequest(async ({ request }) => {
     return json({status:200, property:res});
 });
 
-export const GET = processAPIRequest(async () => {
-    const properties = await propertyService.getAllProperties();
-    return json({ status: 200, properties });
-});
-

@@ -46,14 +46,29 @@ export class PropertyService {
     }
 
     /**
-     * Get all properties
+     * Get all properties for a specific user (owner)
+     * @param ownerId
      * @returns 
      */
-    async getAllProperties(): Promise<IProperty[]> {
-        const properties = await this.propertyRepository.find();
+    async getAllPropertiesByOwner(ownerId: string): Promise<IProperty[]> {
+        if (!ownerId) {
+            throw new UserException("Owner ID is required", 400);
+        }
+
+        const properties = await this.propertyRepository.find({
+            where: {
+                owner: {
+                    id: ownerId,
+                }
+            }
+        });
+
+        if (properties.length === 0) {
+            throw new UserException("No properties found for the given owner", 404);
+        }
+
         return properties;
     }
-    
 
     /**
      * Delete a property by id
