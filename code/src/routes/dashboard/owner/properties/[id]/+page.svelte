@@ -1,33 +1,34 @@
 <script>
-    const properties = {
-        1: {
-            name: "Furnished House",
-            address: "Main Street #123, City",
-            type: "House",
-            status: "Rented"
-        },
-        2: {
-            name: "Modern Office",
-            address: "Central Avenue #456, City",
-            type: "Office",
-            status: "Available"
-        },
-        3: {
-            name: "Beach Apartment",
-            address: "Ocean Drive #789, City",
-            type: "Apartment",
-            status: "Rented"
-        }
-    };
+    import { onMount } from 'svelte';
+    import { goto } from "$app/navigation";
 
     export let data;
-    let property = properties[data.id];
+
+    let property = null;
+
+    onMount(async () => {
+        const res = await fetch(`/api/property/${data.id}`);
+
+        if (res.ok) {
+            const responseData = await res.json();
+            property = responseData.property;
+        } else {
+            goto('/dashboard/owner/properties');
+        }
+    });
 </script>
 
 <div>
-    <span>{property.name}</span>
-    <p><strong>Address:</strong> {property.address}</p>
-    <p><strong>Type:</strong> {property.type}</p>
-    <p><strong>Status:</strong> {property.status}</p>
-    <a href="/dashboard/owner/properties">Back to Property List</a>
+    {#if property}
+        <p><strong>Name:</strong> {property.name}</p>
+        <p><strong>Address Line 1:</strong> {property.address_line1}</p>
+        <!-- <p><strong>Address Line 2:</strong> {property.address_line2 ? property.address_line2 : 'N/A'}</p> -->
+        <p><strong>City:</strong> {property.city}</p>
+        <p><strong>State:</strong> {property.state}</p>
+        <p><strong>Zip Code:</strong> {property.zip}</p>
+
+        <a href="/dashboard/owner/properties">Back to Property List</a>
+    {:else}
+        <p>Loading...</p>
+    {/if}
 </div>
