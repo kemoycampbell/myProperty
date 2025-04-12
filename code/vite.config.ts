@@ -31,9 +31,14 @@ export default defineConfig({
 				}
 			}
 		],
-		coverage:{
+		clearMocks: true,
+		coverage: {
 			include: ['src/**/*'],
-
+			exclude: [
+				'src/lib/server/repositories/**',
+				'src/lib/server/models/**',
+				'src/lib/server/database/**'
+			]
 		}
 	}
 });
