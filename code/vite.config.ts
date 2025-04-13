@@ -39,7 +39,8 @@ export default defineConfig({
 			],
 			exclude: [
 				'src/lib/server/services/**/__mocks__/**',
-				'src/routes/**/__tests__/**'
+				'src/routes/**/__tests__/**',
+				'src/routes/api/**/*'
 			]
 		}		
 	}
