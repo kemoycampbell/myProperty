@@ -22,7 +22,9 @@ describe("PropertyService Tests", () => {
         //we want to mock the property repository
         propertyRepository = {
             save: vi.fn(),
-            findOne: vi.fn()
+            findOne: vi.fn(),
+            find: vi.fn(),
+            remove: vi.fn()
         } as Partial<PropertyRepository>;
 
         //pass the mocked repository to the property service
@@ -195,4 +197,136 @@ describe("PropertyService Tests", () => {
             expect(result).toEqual(fakeProperty); 
         });
     });
+
+    describe("Test getAllPropertiesByOwner", () => {
+
+        it("should throw an error if owner ID is not provided", async () => {
+            const getAllProperties = propertyService.getAllPropertiesByOwner("");
+            await expect(getAllProperties).rejects.toThrow(UserException);
+            await expect(getAllProperties).rejects.toThrowError("Owner ID is required");
+        });
+    
+        it("should throw an error if no properties are found for the given owner", async () => {
+            (propertyRepository.find as Mock).mockResolvedValue([]);
+    
+            const getAllProperties = propertyService.getAllPropertiesByOwner("non-existing-id");
+    
+            await expect(getAllProperties).rejects.toThrow(UserException);
+            await expect(getAllProperties).rejects.toThrowError("No properties found for the given owner");
+        });
+    
+        it("should return properties for the given owner", async () => {
+            const fakeProperty: IProperty = {
+                id: "123456",
+                owner: fakePropertyOwner,
+                name: "test property",
+                address_line1: "1234 test st",
+                address_line2: "Unit A",
+                city: "Testville",
+                state: "TS",
+                zip: "54321",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+    
+            (propertyRepository.find as Mock).mockResolvedValue([fakeProperty]);
+    
+            const properties = await propertyService.getAllPropertiesByOwner(fakePropertyOwner.id);
+            expect(properties).toEqual([fakeProperty]);
+        });
+    
+    });
+
+    describe("Test deleteProperty", () => {
+        it("should throw an error if id is not provided", async () => {
+            const deleteProperty = propertyService.deleteProperty("");
+            await expect(deleteProperty).rejects.toThrow(UserException);
+            await expect(deleteProperty).rejects.toThrow("id is required");
+        });
+    
+        it("should throw an error if property is not found", async () => {
+            // Mock findOne to return undefined
+            (propertyRepository.findOne as Mock).mockResolvedValue(undefined);
+    
+            const deleteProperty = propertyService.deleteProperty("non-existing-id");
+            await expect(deleteProperty).rejects.toThrow(UserException);
+            await expect(deleteProperty).rejects.toThrow("Property not found");
+        });
+    
+        it("should successfully delete the property if it exists", async () => {
+            const fakeProperty: IProperty = {
+                id: "prop123",
+                name: "Test Property",
+                owner: fakePropertyOwner,
+                address_line1: "1234 Test St",
+                address_line2: "Apt 42",
+                city: "City",
+                state: "State",
+                zip: "12345",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            };
+    
+            // Mock findOne to return the fake property
+            (propertyRepository.findOne as Mock).mockResolvedValue(fakeProperty);
+    
+            // Mock remove to resolve
+            (propertyRepository.remove as Mock).mockResolvedValue(undefined);
+    
+            await expect(propertyService.deleteProperty(fakeProperty.id)).resolves.toBeUndefined();
+            expect(propertyRepository.findOne).toHaveBeenCalledWith({ where: { id: fakeProperty.id } });
+            expect(propertyRepository.remove).toHaveBeenCalledWith(fakeProperty);
+        });
+    });
+
+    describe("Test updateProperty", () => {
+        it("should throw an error if id is not provided", async () => {
+            const updateProperty = propertyService.updateProperty("", { name: "Updated Name" });
+            await expect(updateProperty).rejects.toThrow(UserException);
+            await expect(updateProperty).rejects.toThrow("id is required");
+        });
+    
+        it("should throw an error if property is not found", async () => {
+            (propertyRepository.findOne as Mock).mockResolvedValue(undefined);
+    
+            const updateProperty = propertyService.updateProperty("non-existing-id", { name: "Updated Name" });
+            await expect(updateProperty).rejects.toThrow(UserException);
+            await expect(updateProperty).rejects.toThrow("Property not found");
+        });
+    
+        it("should update the property and return the updated object", async () => {
+            const existingProperty: IProperty = {
+                id: "prop123",
+                name: "Old Name",
+                owner: fakePropertyOwner,
+                address_line1: "123 Main St",
+                address_line2: "",
+                city: "City",
+                state: "State",
+                zip: "12345",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            };
+    
+            const updates: Partial<IProperty> = {
+                name: "Updated Name",
+                city: "Updated City"
+            };
+    
+            const expectedUpdated = {
+                ...existingProperty,
+                ...updates
+            };
+    
+            (propertyRepository.findOne as Mock).mockResolvedValue(existingProperty);
+            (propertyRepository.save as Mock).mockResolvedValue(expectedUpdated);
+    
+            const result = await propertyService.updateProperty(existingProperty.id, updates);
+    
+            expect(propertyRepository.findOne).toHaveBeenCalledWith({ where: { id: existingProperty.id } });
+            expect(propertyRepository.save).toHaveBeenCalledWith(expectedUpdated);
+            expect(result.name).toBe("Updated Name");
+            expect(result.city).toBe("Updated City");
+        });
+    });    
 });
