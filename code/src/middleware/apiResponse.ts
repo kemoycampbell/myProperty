@@ -6,7 +6,7 @@ export function processAPIRequest(handler: Function) {
         try {
             return await handler(...args);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             let status = 500;
             let message = "An unknown error occurred";
             if (error instanceof UserException) {

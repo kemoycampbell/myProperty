@@ -4,6 +4,7 @@ import type {ServerInit } from '@sveltejs/kit';
 import database from '$lib/server/database/database';
 import seedRoles from '$lib/server/database/migrations/seedRoles';
 import seedMaintenanceStatus from '$lib/server/database/migrations/seedMaintenanceStatus';
+import seedDocTypes from '$lib/server/database/migrations/seedDocType';
 
 
 
@@ -18,6 +19,7 @@ export const init: ServerInit = async () => {
         //seed the roles
         await seedRoles(database);
         await seedMaintenanceStatus(database);
+        await seedDocTypes(database);
     }
 
 

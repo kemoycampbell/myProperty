@@ -13,7 +13,7 @@ export class Document extends BaseEntity implements IDocument {
     tenant: string;
 
     @Column({type: 'varchar', length: 40, name: 'property_id'})
-    property: string;
+    unit: string;
 
     @Column({type: 'varchar', length: 100, name: 'path'})
     path: string;

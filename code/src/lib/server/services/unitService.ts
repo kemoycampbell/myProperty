@@ -29,4 +29,16 @@ export class UnitService {
         
     }
 
+    async getById(id: string): Promise<IUnit> {
+        if(!id) {
+            throw new UserException("Unit ID is required");
+        }
+
+        const unit = await this.unitRepository.findOne({ where: { id } });
+        if(!unit) {
+            throw new UserException("Unit not found");
+        }
+        return unit;
+    }
+
 }

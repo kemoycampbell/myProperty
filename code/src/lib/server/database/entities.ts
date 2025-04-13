@@ -1,3 +1,5 @@
+import { Document } from "../models/entity/document/Document";
+import { DocType, DocumentType } from "../models/entity/document_type/DocType";
 import { MaintenanceRequest } from "../models/entity/maintenance_request/MaintenanceRequest";
 import { MaintenanceRequestPhoto } from "../models/entity/maintenance_request_photo/MaintenanceRequestPhoto";
 import { MaintenanceRequestStatus } from "../models/entity/maintenance_request_status/MaintenanceRequestStatus";
@@ -19,5 +21,7 @@ export const ENTITIES = [
     MaintenanceRequest,
     MaintenanceRequestPhoto,
     MaintenanceStatus,
-    MaintenanceRequestStatus
+    MaintenanceRequestStatus,
+    DocType,
+    Document
 ]

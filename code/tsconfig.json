@@ -13,7 +13,7 @@
 		"noImplicitAny": false,
 		"strictPropertyInitialization": false,
 		"experimentalDecorators": true,
-   		 "emitDecoratorMetadata": true
+   		 "emitDecoratorMetadata": true,
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

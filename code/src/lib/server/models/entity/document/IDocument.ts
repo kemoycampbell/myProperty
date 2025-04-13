@@ -4,7 +4,7 @@ import type { IDocType } from "../document_type/IDocType";
 export interface IDocument extends IEntity {
     owner: string,
     tenant: string,
-    property:string
+    unit:string
     path: string
     docType: IDocType
 }

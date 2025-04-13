@@ -8,10 +8,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 import {fileTypeFromBuffer} from 'file-type';
+import type { PropertyService } from "./propertyService";
+import type { UnitRepository } from "../repositories/unit/unitRepository";
+import type { UnitService } from "./unitService";
 
 export class DocumentService {
     private documentRepository: DocumentRepository;
     private userService: UserService;
+    private unitService: UnitService;
 
     private allowedFileTypes: string[];
 
@@ -67,7 +71,7 @@ export class DocumentService {
         const type = await fileTypeFromBuffer(buffer);
 
         if(!type) {
-            throw new UserException("An error occurred detecting the file type. Please try again");
+            throw new UserException("File type not allowed. Allowed file types are: " + this.allowedFileTypes.join(", "));
         }
 
         //check if the file type is allowed
@@ -80,7 +84,7 @@ export class DocumentService {
 
         // Save the file to the server (this is just an example, you should implement your own logic)
         const filename = uuidv4() + '.' + type.ext;
-        const filePath = path.join(__dirname, '..', '..', 'uploads', filename);
+        const filePath = path.join(process.cwd(), 'uploads', filename);
 
         await fs.writeFile(filePath, buffer);
         const isSaved = await fs.readFile(filePath);
@@ -91,16 +95,40 @@ export class DocumentService {
         return filePath;
     }
 
-    async createDocument(owner: string, tenant: string, property: string, base64File:string): Promise<IDocument> {
+    async createDocument(owner: string, tenant: string, unit: string, base64File:string): Promise<IDocument> {
         if(!owner) {
             throw new UserException("Owner id is required");
         }
         if(!tenant) {
             throw new UserException("Tenant id is required");
         }
-        if(!property) {
-            throw new UserException("Property id is required");
+        if(!unit) {
+            throw new UserException("unit id is required");
         }
+
+        //ensure that the owner exist
+        try{
+            await this.userService.getById(owner);
+        }catch(error){
+            //if the error is type of user exception, throw owner not found
+            if(error instanceof UserException) {
+                throw new UserException("Owner not found");
+            }
+        }
+
+        try{
+            await this.userService.getById(tenant);
+        }catch(error){
+            //if the error is type of user exception, throw owner not found
+            if(error instanceof UserException) {
+                throw new UserException("tenant not found");
+            }
+        }
+        
+        //ensure the unit exist
+        await this.unitService.getById(unit);
+
+        
 
         //attempt to save the file
         const path = await this.upload(base64File);
@@ -108,7 +136,7 @@ export class DocumentService {
         const document = await this.documentRepository.create({
             owner,
             tenant,
-            property,
+            unit,
             path
         });
 
