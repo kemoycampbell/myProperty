@@ -19,7 +19,8 @@ export class DocumentService {
 
     private allowedFileTypes: string[];
 
-    constructor(documentRepository: DocumentRepository, userService: UserService) {
+    constructor(documentRepository: DocumentRepository, userService: UserService, unitService: UnitService) {
+        this.unitService = unitService;
         this.documentRepository = documentRepository;
         this.userService = userService;
 
@@ -103,7 +104,7 @@ export class DocumentService {
             throw new UserException("Tenant id is required");
         }
         if(!unit) {
-            throw new UserException("unit id is required");
+            throw new UserException("Unit id is required");
         }
 
         //ensure that the owner exist

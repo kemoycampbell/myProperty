@@ -8,16 +8,23 @@ import { DocumentService } from "$lib/server/services/documentService";
 import type { UserService } from "$lib/server/services/userService";
 import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
 import fs from 'fs';
+import { base } from "$app/paths";
+import type { UnitService } from "$lib/server/services/unitService";
+import type { IUnit } from "$lib/server/models/entity/unit/IUnit";
+import type { IProperty } from "$lib/server/models/entity/property/IProperty";
 
 describe("DocumentService Tests", () => {
 
     let documentService:DocumentService;
     let documentRepository:Partial<DocumentRepository>;
+    let unitService:Partial<UnitService>;
     let userService:Partial<UserService>;
 
 
     let fakeUser:IUser;
     let fakeDocument:IDocument;
+    let fakeUnit: IUnit;
+    let fakeProperty: IProperty
 
 
 
@@ -55,6 +62,40 @@ describe("DocumentService Tests", () => {
         } 
 
 
+        fakeUser = {
+            id: "123456",
+            email: "iWantToSeeTheManager@karen.com",
+            username: "karen",
+            password: "password",
+            role: fakeRole,
+            firstName: "Karen",
+            lastName: "Karenson",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        } 
+
+        fakeProperty = {
+            id: "123456",
+            owner: fakeUser,
+            name: "test",
+            address_line1: "1234 test st",
+            address_line2: "",
+            city: "test",
+            state: "test",
+            zip: "12345",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+
+        fakeUnit = {
+            id: "123456",
+            number: 123,
+            property: fakeProperty,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+
+
 
         //we want to mock the document repository
         documentRepository = {
@@ -67,7 +108,11 @@ describe("DocumentService Tests", () => {
         userService = {
             getById: vi.fn().mockResolvedValue(fakeUser)
         }
-        documentService = new DocumentService(documentRepository as DocumentRepository, userService as UserService);
+
+        unitService = {
+            getById: vi.fn().mockResolvedValue(fakeUnit)
+        }
+        documentService = new DocumentService(documentRepository as DocumentRepository, userService as UserService, unitService as UnitService);
     })
 
     describe("getDocumentById", () => {
@@ -158,6 +203,49 @@ describe("DocumentService Tests", () => {
             expect(result).toBeDefined();
             expect(result).toContain("uploads/");
             expect(result).toContain(".pdf");;
+        });
+    });
+
+    describe("createDocument", () => {
+        it('should throw an error if the owner id is not provided', async () => {
+            const owner = "";
+            const tenant = "123";
+            const unit = "123";
+            const base64File = fs.readFileSync("src/tests/document/lease.txt", 'utf8');
+
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError(UserException);
+
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError("Owner id is required");
+        });
+
+        it('should throw an error if the tenant id is not provided', async () => {
+            const owner = "123";
+            const tenant = "";
+            const unit = "123";
+            const base64File = fs.readFileSync("src/tests/document/lease.txt", 'utf8');
+
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError(UserException);
+
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError("Tenant id is required");
+        });
+
+        it('should throw an error if the unit id is not provided', async () => {
+            const owner = "123";
+            const tenant = "123";
+            const unit = "";
+            const base64File = fs.readFileSync("src/tests/document/lease.txt", 'utf8');
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError(UserException);
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError("Unit id is required");
+        });
+
+        it('should throw an error if the file is not provided', async () => {
+            const owner = "123";
+            const tenant = "123";
+            const unit = "123";
+            const base64File = "";
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError(UserException);
+            await expect(documentService.createDocument(owner, tenant, unit, base)).rejects.toThrowError("file is required!");
+
         });
     });
 

@@ -52,7 +52,9 @@ export default defineConfig({
                 'src/hooks.*{js,ts}',
                 'src/tests/**',
                 'src/lib/index.ts',
-                'src/app.d.ts'
+                'src/app.d.ts',
+                'src/components/**', //skip sveltekit components for now
+                'src/routes/**', //skip ui
             ]
         }
     }
