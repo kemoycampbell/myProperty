@@ -33,12 +33,14 @@ export default defineConfig({
 		],
 		clearMocks: true,
 		coverage: {
-			include: ['src/**/*'],
+			include: [
+				'src/lib/server/services/**/*.{ts,js}',
+				'src/routes/**/*.{ts,js,svelte}'
+			],
 			exclude: [
-				'src/lib/server/repositories/**',
-				'src/lib/server/models/**',
-				'src/lib/server/database/**'
+				'src/lib/server/services/**/__mocks__/**',
+				'src/routes/**/__tests__/**'
 			]
-		}
+		}		
 	}
 });
