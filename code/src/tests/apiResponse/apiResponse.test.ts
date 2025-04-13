@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { processAPIRequest } from "src/middleware/apiResponse";
+import { processAPIRequest } from "../../middleware/apiResponse";
 import { UserException } from "$lib/server/exceptions/UserException";
 import { json } from "@sveltejs/kit";
 
