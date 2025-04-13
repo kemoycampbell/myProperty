@@ -81,7 +81,7 @@ describe("PropertyService Tests", () => {
         };
 
         await expect(propertyService.createProperty(property)).rejects.toThrowError(
-            new UserException("address_line1, city,state,zip are required", 400)
+            new UserException("address_line1, city, state, zip are required", 400)
         );
     })
 
@@ -95,7 +95,7 @@ describe("PropertyService Tests", () => {
         };
 
         await expect(propertyService.createProperty(property)).rejects.toThrowError(
-            new UserException("address_line1, city,state,zip are required", 400)
+            new UserException("address_line1, city, state, zip are required", 400)
         );
     })
 
@@ -109,7 +109,7 @@ describe("PropertyService Tests", () => {
         };
 
         await expect(propertyService.createProperty(property)).rejects.toThrowError(
-            new UserException("address_line1, city,state,zip are required", 400)
+            new UserException("address_line1, city, state, zip are required", 400)
         );
     })
 
@@ -123,7 +123,7 @@ describe("PropertyService Tests", () => {
         };
 
         await expect(propertyService.createProperty(property)).rejects.toThrowError(
-            new UserException("address_line1, city,state,zip are required", 400)
+            new UserException("address_line1, city, state, zip are required", 400)
         );
     })
 
