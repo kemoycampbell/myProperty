@@ -13,5 +13,11 @@
                 <img src="https://codecov.io/gh/kemoycampbell/myProperty/branch/main/graph/badge.svg" alt="Coverage Status">
             </a>
         </div>
+        <div>
+            <h4>Code Quality Status</h4>
+            <a href="https://sonarcloud.io/summary/overall?id=kemoycampbell_myProperty&branch=main">
+                <img src="https://sonarcloud.io/api/project_badges/measure?project=kemoycampbell_myProperty&metric=alert_status" alt="Code Quality Status">
+            </a>
+        </div>
     </div>
 </div>
