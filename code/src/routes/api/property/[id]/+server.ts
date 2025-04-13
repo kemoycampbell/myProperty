@@ -15,7 +15,6 @@ const userService: UserService = new UserService(userRepository, roleRepository)
 const propertyRepository: PropertyRepository = new PropertyRepository(database.createQueryRunner());
 const propertyService: PropertyService = new PropertyService(propertyRepository);
 
-
 //api endpoint to create a new property
 export const POST = processAPIRequest(async ({ request }) => {
     const data = await request.json();
@@ -37,4 +36,18 @@ export const GET = processAPIRequest(async ({ params }) => {
     const res = await propertyService.getPropertyById(data);
     return json({status:200, property:res});
 });
+
+export const DELETE = processAPIRequest(async ({ params }) => {
+    const id = params.id;
+    await propertyService.deleteProperty(id);
+    return json({ status: 200, message: "Property deleted successfully" });
+});
+
+export const PUT = processAPIRequest(async ({ request, params }) => {
+    const id = params.id;
+    const data = await request.json();
+    const updatedProperty = await propertyService.updateProperty(id, data);
+    return json({ status: 200, property: updatedProperty });
+});
+
 
