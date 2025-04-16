@@ -1,0 +1,2 @@
+sonar.sources=code/src
+sonar.exclusions=**/*.test.ts, **/*.spec.ts, **/tests/**
