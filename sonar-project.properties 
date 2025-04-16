@@ -2,4 +2,4 @@ sonar.sources=code
 sonar.tests=code/tests
 sonar.test.inclusions=**/*.test.ts, **/*.spec.ts
 sonar.exclusions=**/*.test.ts, **/*.spec.ts, **/tests/**
-sonar.javascript.testFramework=vitest
+sonar.javascript.testFramework=vitest 
