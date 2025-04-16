@@ -39,7 +39,7 @@ export class MaintenanceRequestService {
             throw new UserException("Unit ID is not found", 400)
 
         if(!description)
-            throw new UserException("Description is required", 400)
+            throw new UserException("Maintenance Request Description is required", 400)
 
         //  create the maintenance request in form of entity
         const request: Partial<IMaintenanceRequest> = {

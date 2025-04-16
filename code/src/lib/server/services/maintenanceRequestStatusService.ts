@@ -32,7 +32,7 @@ export class MaintenanceRequestStatusService {
             throw new UserException("Maintenance Operator ID is required", 400)
 
         if(!status)
-            throw new UserException("Status is required", 400)
+            throw new UserException("Maintenance Status is required", 400)
 
         const maintenanceRequest = await this.maintenanceRequestRepository.findOne({where: {id: maintenance_request_id}});
         const maintenanceOperator = await this.userRepository.findOne({where: {id: user_operator_id}});

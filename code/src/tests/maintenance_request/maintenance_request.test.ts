@@ -63,7 +63,7 @@ describe("MaintenanceRequestServie Tests", () => {
         }
 
     beforeEach(() => {
-        // Mock user Repository's findOne function
+        // Mock User Repository's findOne function
         userRepository = {
             findOne: vi.fn().mockResolvedValue(fakeUser)
         } as Partial<UserRepository>;
@@ -77,36 +77,57 @@ describe("MaintenanceRequestServie Tests", () => {
         } as Partial<MaintenanceRequestRepository>;
 
         //initalize the service with the mock repositories
-        maintenanceRequestService = new MaintenanceRequestService(maintenanceRequestRepository as MaintenanceRequestRepository, userRepository as UserRepository, unitRepository as UnitRepository);
-        
+        maintenanceRequestService = new MaintenanceRequestService(
+            maintenanceRequestRepository as MaintenanceRequestRepository, 
+            userRepository as UserRepository, 
+            unitRepository as UnitRepository
+        );
     });
 
-    it("It should throw an user exception if the user id is not provided", async()=>{
+    it("should throw a user exception if the user id is not provided", async() => {
         const userId = "";
-        const unitId = fakeUnit.id
-        const description = fakeMaintenanceRequest.description
-
-        const maintaince = maintenanceRequestService.createMaintenanceRequest(userId, unitId, description);
-
-        await(expect(maintaince)).rejects.toThrowError(UserException);
-        await expect(maintaince).rejects.toThrowError("Requested User ID is required");
-    })
-
-    it("should successfully created the request", async ()=>{
-        const userId = "123";
-        const unitId = fakeUnit.id
+        const unitId = fakeUnit.id;
         const description = fakeMaintenanceRequest.description;
 
-        const maintaince = await maintenanceRequestService.createMaintenanceRequest(userId, unitId, description);
+        const maintenance = maintenanceRequestService.createMaintenanceRequest(userId, unitId, description);
 
-        expect(maintaince).toEqual(fakeMaintenanceRequest);
-
-
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Requested User ID is required");
     })
 
-        // constructor(maintenanceRequestRepository: MaintenanceRequestRepository, userRepository: UserRepository, unitRepository: UnitRepository) {
-        //     this.maintenanceRequestRepository = maintenanceRequestRepository;
-        //     this.userRepository = userRepository;
-        //     this.unitRepository = unitRepository;
-        // }
+    it("should throw a user exception if the unit id is not provided", async() => {
+        const userId = fakeUser.id;
+        const unitId = "";
+        const description = fakeMaintenanceRequest.description;
+
+        const maintenance = maintenanceRequestService.createMaintenanceRequest(
+            userId, 
+            unitId, 
+            description
+        );
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Unit ID is required");
+    })
+
+    it("should throw a user exception if the maintenance request description is not provided", async() => {
+        const userId = fakeUser.id;
+        const unitId = fakeUnit.id;
+        const description = "";
+
+        const maintenance = maintenanceRequestService.createMaintenanceRequest(userId, unitId, description);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Maintenance Request Description is required");
+    })
+
+    it("should successfully create a maintenance request", async () => {
+        const userId = fakeUser.id;
+        const unitId = fakeUnit.id;
+        const description = fakeMaintenanceRequest.description;
+
+        const maintenance = await maintenanceRequestService.createMaintenanceRequest(userId, unitId, description);
+
+        expect(maintenance).toEqual(fakeMaintenanceRequest);
+    })
 });
