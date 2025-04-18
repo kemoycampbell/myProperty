@@ -1,4 +1,3 @@
-import { UserException } from '$lib/server/exceptions/UserException';
 import { UserRepository } from '$lib/server/repositories/user/UserRepository';
 import { RoleRepository } from '$lib/server/repositories/role/RoleRepository';
 import { UserService } from '$lib/server/services/userService';

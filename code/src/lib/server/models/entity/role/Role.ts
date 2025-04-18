@@ -1,7 +1,6 @@
-import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
+import { Column, Entity } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import type { IRole } from "./IRole";
-import { User } from "../User/User";
 
 export enum RoleType
 {

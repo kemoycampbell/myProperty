@@ -1,5 +1,5 @@
 
-import { CreateDateColumn, Entity, Generated, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 import type { IEntity } from "./IEntity";
 
 /**

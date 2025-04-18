@@ -34,7 +34,7 @@ export class UserService {
 
         //attempt to find the username. UserException will be thrown if the username is not found
         const user = await this.repository.findByUsername(username);
-        //console.log(user);
+  
 
         if(!user) {
             throw new UserException("Invalid credential", this.UNAUTHORIZED_STATUS);

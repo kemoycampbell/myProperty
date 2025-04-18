@@ -8,8 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 import {fileTypeFromBuffer} from 'file-type';
-import type { PropertyService } from "./propertyService";
-import type { UnitRepository } from "../repositories/unit/unitRepository";
 import type { UnitService } from "./unitService";
 
 export class DocumentService {

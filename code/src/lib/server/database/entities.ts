@@ -1,5 +1,5 @@
 import { Document } from "../models/entity/document/Document";
-import { DocType, DocumentType } from "../models/entity/document_type/DocType";
+import { DocType} from "../models/entity/document_type/DocType";
 import { MaintenanceRequest } from "../models/entity/maintenance_request/MaintenanceRequest";
 import { MaintenanceRequestPhoto } from "../models/entity/maintenance_request_photo/MaintenanceRequestPhoto";
 import { MaintenanceRequestStatus } from "../models/entity/maintenance_request_status/MaintenanceRequestStatus";

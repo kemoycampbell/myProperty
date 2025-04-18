@@ -20,14 +20,6 @@ const propertyService: PropertyService = new PropertyService(propertyRepository)
 export const POST = processAPIRequest(async ({ request }) => {
     const data = await request.json();
     console.log(data);
-    const property = {
-        owner: await userService.getById(data.owner),
-        address_line1: data.address_line1,
-        address_line2: data.address_line2,
-        city: data.city,
-        state: data.state,
-        zip: data.zip
-    }
     const res = await propertyService.createProperty(data);
     return json({status:200, property:res});
 });

@@ -1,7 +1,7 @@
 import { UserException } from "$lib/server/exceptions/UserException";
 import type { IUser } from "$lib/server/models/entity/User/IUser";
 import { User } from "$lib/server/models/entity/User/User";
-import { EntityManager, Repository, type QueryRunner } from "typeorm";
+import { Repository, type QueryRunner } from "typeorm";
 
 export class UserRepository extends Repository<IUser>
 {

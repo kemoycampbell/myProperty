@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import { User } from "../User/User";
 import type { IProperty } from "./IProperty";

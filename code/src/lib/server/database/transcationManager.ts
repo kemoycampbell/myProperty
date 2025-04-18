@@ -16,8 +16,7 @@ export class TransactionManager {
       const queryRunner = database.createQueryRunner();
       
     //   // Establish a database connection for the transaction
-    //   await queryRunner.connect();
-      
+    
       // Start the transaction
       await queryRunner.startTransaction();
   

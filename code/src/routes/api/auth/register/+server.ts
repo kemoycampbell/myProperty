@@ -1,4 +1,3 @@
-import { UserException } from '$lib/server/exceptions/UserException';
 import { UserRepository } from '$lib/server/repositories/user/UserRepository';
 import { UserService } from '$lib/server/services/userService';
 import { json } from '@sveltejs/kit';
