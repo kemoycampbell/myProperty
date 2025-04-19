@@ -44,6 +44,21 @@ export class DocumentService {
         return document;
     }
 
+    async getDocumentsByOwnerId(ownerId: string): Promise<IDocument[]> {
+        if(!ownerId) {
+            throw new UserException("Owner ID is required");
+        }
+
+        let documents: IDocument[] = await this.documentRepository.find({ where: { owner: ownerId } });
+
+        if(!documents || documents.length === 0) {
+            documents = [];
+        }
+
+        return documents;
+    }
+    
+
     async getDocumentsByUserId(userId: string): Promise<IDocument[]> {
         if(!userId) {
             throw new UserException("User ID is required");
