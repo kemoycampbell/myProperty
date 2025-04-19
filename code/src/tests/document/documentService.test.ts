@@ -195,15 +195,17 @@ describe("DocumentService Tests", () => {
                 new UserException("File type not allowed. Allowed file types are: application/pdf, image/jpeg, image/png, application/msword, application/docx", 400)
             );
         });
-
+        
         it('should return the document if file is valid', async () => {
             const base64File = fs.readFileSync("src/tests/document/lease.txt", 'utf8');
-
+        
             const result = await documentService.upload(base64File);
-            expect(result).toBeDefined();
-            expect(result).toContain("uploads/");
-            expect(result).toContain(".pdf");;
-        });
+            const normalizedResult = result.replace(/\\/g, "/");
+        
+            expect(result).toBeDefined();   
+            expect(normalizedResult).toContain("uploads/");
+            expect(normalizedResult).toContain(".pdf");
+        });        
     });
 
     describe("createDocument", () => {
