@@ -16,6 +16,10 @@
             goto('/dashboard/owner/properties');
         }
     });
+
+    function goToAdd() {
+        goto(`/dashboard/owner/properties/${data.id}/unit`);
+    }
 </script>
 
 <div>
@@ -26,6 +30,23 @@
         <p><strong>City:</strong> {property.city}</p>
         <p><strong>State:</strong> {property.state}</p>
         <p><strong>Zip Code:</strong> {property.zip}</p>
+
+        <button on:click={() => goToAdd()}>Add</button>
+
+        <ul>
+            <li>
+                Unit number
+            </li>
+            <li>
+                Unit number
+            </li>
+            <li>
+                Unit number
+            </li>
+            <li>
+                Unit number
+            </li>
+        </ul>
 
         <a href="/dashboard/owner/properties">Back to Property List</a>
     {:else}
