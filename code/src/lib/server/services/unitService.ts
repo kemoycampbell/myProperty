@@ -61,4 +61,45 @@ export class UnitService {
 
         return units;
     }
+
+    // /**
+    //  * Delete a unit by id
+    //  * @param id 
+    //  * @returns 
+    //  */
+    // async deleteUnit(id: string): Promise<void> {
+    //     if (!id) {
+    //         throw new UserException("id is required", 400);
+    //     }
+
+    //     const unit = await this.unitRepository.findOne({ where: { id } });
+
+    //     if (!unit) {
+    //         throw new UserException("Unit not found", 404);
+    //     }
+
+    //     await this.unitRepository.remove(unit);
+    // }
+
+    // /**
+    //  * Update a unit by id
+    //  * @param id 
+    //  * @param updates 
+    //  * @returns 
+    //  */
+    // async updateUnit(id: string, updates: Partial<IUnit>): Promise<IUnit> {
+    //     if (!id) {
+    //         throw new UserException("id is required", 400);
+    //     }
+
+    //     const unit = await this.unitRepository.findOne({ where: { id } });
+
+    //     if (!unit) {
+    //         throw new UserException("Unit not found", 404);
+    //     }
+
+    //     const updated = Object.assign(unit, updates);
+
+    //     return await this.unitRepository.save(updated);
+    // }
 }
