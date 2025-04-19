@@ -17,7 +17,7 @@ export class Unit extends BaseEntity implements IUnit
     @Column({type: 'int'})
     number: number;
 
-    @Column({type: 'uuid'})
+    // @Column({type: 'uuid'})
     @ManyToOne(()=> Property, (property)=> property.id)
     property: Property;
 
