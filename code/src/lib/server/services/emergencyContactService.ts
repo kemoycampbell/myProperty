@@ -35,13 +35,19 @@ export class EmergencyContactService {
         if(!last_name || last_name.length < 2)
             throw new UserException("Invalid Last Name", 400)
 
+        if(!email)
+            throw new UserException("Invalid Email Address", 400);
+
         const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         if (!isEmailValid)
-            throw new UserException("Invalid Email Address", 400);
+            throw new UserException("Invalid Format Email Address", 400);
+
+        if(!phone)
+            throw new UserException("Invalid Phone Number", 400);
 
         const isPhoneValid = /^\+?[0-9]{7,15}$/.test(phone);
         if (!isPhoneValid)
-            throw new UserException("Invalid Phone Number", 400);
+            throw new UserException("Invalid Format Phone Number", 400);
 
         // create the emergency contact in form of entity
         const request: Partial<IEmergencyContact> = {
