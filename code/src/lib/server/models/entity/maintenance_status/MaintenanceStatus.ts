@@ -6,7 +6,8 @@ import type { IMaintenanceStatus } from "./IMaintenanceStatus";
 export enum MaintenanceStatusType {
     NEW = "new",
     UPDATE = "update",
-    COMPLETED = "completed"
+    COMPLETED = "completed",
+    UNASSIGNED = "unassigned",
 }
 
 @Entity()
