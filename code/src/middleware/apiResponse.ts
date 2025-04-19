@@ -12,6 +12,8 @@ export function processAPIRequest(handler: Function) {
                 status = error.status;
                 message = error.message;
             }
+
+            console.log(error);
             return json({ error: message, status: status });
         }
     };

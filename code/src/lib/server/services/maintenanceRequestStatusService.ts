@@ -55,4 +55,84 @@ export class MaintenanceRequestStatusService {
 
         return res;
     }
+
+    async startWorkOnTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const in_progress = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.UPDATE);
+        if (!in_progress) {
+            throw new UserException("Maintenance Status 'UPDATE' does not exist", 400);
+        }
+
+        const request_status = this.maintenanceRequestStatusRepository.update(
+            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
+            {status: in_progress}
+        );
+
+        if (!request_status) {
+            throw new UserException("Failed to update Maintenance Request Status", 400);
+        }
+
+        const res = await this.maintenanceRequestStatusRepository.findOne({
+            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
+        });
+
+        if(!res) {
+            throw new UserException("Failed to find Maintenance Request Status", 400);
+        }
+
+        return res;
+
+    }
+
+    async unAssignTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const unassigned = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.NEW);
+        if (!unassigned) {
+            throw new UserException("Maintenance Status 'NEW' does not exist", 400);
+        }
+
+        const request_status = this.maintenanceRequestStatusRepository.update(
+            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
+            {status: unassigned}
+        );
+
+        if (!request_status) {
+            throw new UserException("Failed to update Maintenance Request Status", 400);
+        }
+
+        const res = await this.maintenanceRequestStatusRepository.findOne({
+            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
+        });
+
+        if(!res) {
+            throw new UserException("Failed to find Maintenance Request Status", 400);
+        }
+
+        return res;
+    }
+
+    async completeTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const completed = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.COMPLETED);
+        if (!completed) {
+            throw new UserException("Maintenance Status 'COMPLETED' does not exist", 400);
+        }
+
+        const request_status = this.maintenanceRequestStatusRepository.update(
+            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
+            {status: completed}
+        );
+
+        if (!request_status) {
+            throw new UserException("Failed to update Maintenance Request Status", 400);
+        }
+
+        const res = await this.maintenanceRequestStatusRepository.findOne({
+            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
+        });
+
+        if(!res) {
+            throw new UserException("Failed to find Maintenance Request Status", 400);
+        }
+
+        return res;
+    }
+        
 }
