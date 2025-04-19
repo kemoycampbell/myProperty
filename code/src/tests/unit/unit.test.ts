@@ -91,7 +91,7 @@ describe("UnitService Tests", () => {
     
             await expect(unitService.create(unit)).rejects.toThrowError(UserException);
     
-            await expect(unitService.create(unit)).rejects.toThrowError("number is required");
+            await expect(unitService.create(unit)).rejects.toThrowError("Number is required");
         });
     
         it('should save the unit if all required fields are provided', async () => {
