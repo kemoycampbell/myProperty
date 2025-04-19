@@ -79,6 +79,19 @@ describe("EmergencyContactService Test", () => {
         await(expect(emergencyConctact)).rejects.toThrowError(UserException);
         await expect(emergencyConctact).rejects.toThrowError("Invalid First Name");
     })
+
+    it("should throw a user exception if the emergency contact first name is less than 2 characters long", async() => {
+        const emergencyConctact = emergencyContactService.createEmergencyContact(
+            "1",
+            "a",
+            fakeEmergencyContact.lastName,
+            fakeEmergencyContact.email,
+            fakeEmergencyContact.phone
+        );
+
+        await(expect(emergencyConctact)).rejects.toThrowError(UserException);
+        await expect(emergencyConctact).rejects.toThrowError("Invalid First Name - it is too short");
+    })
     
     it("should throw a user exception if the emergency contact last name is not provided", async() => {
         const emergencyConctact = emergencyContactService.createEmergencyContact(
@@ -91,6 +104,19 @@ describe("EmergencyContactService Test", () => {
 
         await(expect(emergencyConctact)).rejects.toThrowError(UserException);
         await expect(emergencyConctact).rejects.toThrowError("Invalid Last Name");
+    })
+
+    it("should throw a user exception if the emergency contact last name is less than 2 characters long", async() => {
+        const emergencyConctact = emergencyContactService.createEmergencyContact(
+            "1",
+            fakeEmergencyContact.firstName,
+            "a",
+            fakeEmergencyContact.email,
+            fakeEmergencyContact.phone
+        );
+
+        await(expect(emergencyConctact)).rejects.toThrowError(UserException);
+        await expect(emergencyConctact).rejects.toThrowError("Invalid Last Name - it is too short");
     })
 
     it("should throw a user exception if the emergency contact email is not provided", async() => {
@@ -130,5 +156,18 @@ describe("EmergencyContactService Test", () => {
 
         await(expect(emergencyConctact)).rejects.toThrowError(UserException);
         await expect(emergencyConctact).rejects.toThrowError("Invalid Phone Number");
+    })
+
+    it("should throw a user exception if the emergency contact phone number is not a valid format", async() => {
+        const emergencyConctact = emergencyContactService.createEmergencyContact(
+            "1",
+            fakeEmergencyContact.firstName,
+            fakeEmergencyContact.lastName,
+            fakeEmergencyContact.email,
+            "123"
+        );
+
+        await(expect(emergencyConctact)).rejects.toThrowError(UserException);
+        await expect(emergencyConctact).rejects.toThrowError("Invalid Format Phone Number");
     })
 });

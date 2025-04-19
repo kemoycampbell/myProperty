@@ -29,11 +29,17 @@ export class EmergencyContactService {
         if(!user)
             throw new UserException("Request Tenant User ID is not found", 400);
 
-        if(!first_name || first_name.length < 2)
+        if(!first_name)
             throw new UserException("Invalid First Name", 400)
 
-        if(!last_name || last_name.length < 2)
+        if(first_name.length < 2)
+            throw new UserException("Invalid First Name - it is too short");
+
+        if(!last_name)
             throw new UserException("Invalid Last Name", 400)
+
+        if(last_name.length < 2)
+            throw new UserException("Invalid Last Name - it is too short");
 
         if(!email)
             throw new UserException("Invalid Email Address", 400);
