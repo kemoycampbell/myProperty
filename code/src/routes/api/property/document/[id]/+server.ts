@@ -40,11 +40,11 @@ export const GET = processAPIRequest(async ({ params }) => {
 });
 
 export const POST = processAPIRequest(async ({ request, params }) => {
-    const { ownerid } = params;
+    const { id } = params;
     const data = await request.json();
 
 
-    const document = await documentService.createDocument(ownerid, data.tenantId, data.unitId, data.file);
+    const document = await documentService.createDocument(id, data.tenantId, data.unitId, data.file);
     return json({
         status: 200,
         body: {
