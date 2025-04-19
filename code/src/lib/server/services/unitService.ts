@@ -12,33 +12,53 @@ export class UnitService {
         this.propertyService = propertyService;
     }
 
-
     async create(unit: Partial<IUnit>): Promise<IUnit> {
-        if(!unit.property) {
+        if (!unit.property) {
             throw new UserException("Property is required");
         }
 
-        //ensure that the unit exist
         await this.propertyService.getPropertyById(unit.property.id);
 
-        if(!unit.number) {
-            throw new UserException("number is required");
+        if (!unit.number) {
+            throw new UserException("Number is required");
         }
 
         return await this.unitRepository.save(unit);
-        
     }
 
     async getById(id: string): Promise<IUnit> {
-        if(!id) {
+        if (!id) {
             throw new UserException("Unit ID is required");
         }
 
         const unit = await this.unitRepository.findOne({ where: { id } });
-        if(!unit) {
+
+        if (!unit) {
             throw new UserException("Unit not found");
         }
         return unit;
     }
 
+    /**
+     * Get all units associated with a specific property.
+     * @param propertyId - The ID of the property.
+     * @returns An array of units associated with the property.
+     */
+    async getByPropertyId(propertyId: string): Promise<IUnit[]> {
+        if (!propertyId) {
+            throw new UserException("Property ID is required");
+        }
+        
+        await this.propertyService.getPropertyById(propertyId);
+
+        const units = await this.unitRepository.find({
+            where: { property: { id: propertyId } },
+        });
+
+        if (!units || units.length === 0) {
+            throw new UserException("No units found for the given property", 404);
+        }
+
+        return units;
+    }
 }
