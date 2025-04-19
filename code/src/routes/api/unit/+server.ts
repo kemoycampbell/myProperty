@@ -1,0 +1,30 @@
+import database from "$lib/server/database/database";
+import { UnitRepository } from "$lib/server/repositories/unit/unitRepository";
+import { RoleRepository } from "$lib/server/repositories/role/RoleRepository";
+import { UserRepository } from "$lib/server/repositories/user/UserRepository";
+import { UnitService } from "$lib/server/services/unitService";
+import { PropertyService } from "$lib/server/services/propertyService";
+import { PropertyRepository } from "$lib/server/repositories/property/propertyRepository";
+import { UserService } from "$lib/server/services/userService";
+import { processAPIRequest } from "../../../middleware/apiResponse";
+import { json } from '@sveltejs/kit';
+
+
+const userRepository: UserRepository = new UserRepository(database.createQueryRunner());
+const roleRepository: RoleRepository = new RoleRepository(database.createQueryRunner());
+const userService: UserService = new UserService(userRepository, roleRepository);
+const propertyRepository: PropertyRepository = new PropertyRepository(database.createQueryRunner());
+const propertyService: PropertyService = new PropertyService(propertyRepository);
+
+const unitRepository: UnitRepository = new UnitRepository(database.createQueryRunner());
+const unitService: UnitService = new UnitService(unitRepository, propertyService);
+
+
+//api endpoint to create a new unit
+export const POST = processAPIRequest(async ({ request }) => {
+    const data = await request.json();
+    console.log(data);
+    const res = await unitService.create(data);
+    return json({status:200, unit:res});
+});
+
