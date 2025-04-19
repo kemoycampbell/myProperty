@@ -9,6 +9,7 @@ import { UnitRepository } from "$lib/server/repositories/unit/unitRepository";
 import { PropertyService } from "$lib/server/services/propertyService";
 import { PropertyRepository } from "$lib/server/repositories/property/propertyRepository";
 import { processAPIRequest } from "$middleware/apiResponse";
+import { json } from "@sveltejs/kit";
 
 const runner = database.createQueryRunner();
 
@@ -28,14 +29,14 @@ const unitService = new UnitService(unitRepository, propertyService);
 const documentService = new DocumentService(documentRepository, userService, unitService);
 
 export const GET = processAPIRequest(async ({ params }) => {
-    const { ownerid } = params;
-    const documents = await documentService.getDocumentsByOwnerId(ownerid);
-    return {
+    const { id } = params;
+    const documents = await documentService.getDocumentsByOwnerId(id);
+    return json({
         status: 200,
         body: {
             documents
         }
-    };
+    });
 });
 
 export const POST = processAPIRequest(async ({ request, params }) => {
@@ -44,11 +45,11 @@ export const POST = processAPIRequest(async ({ request, params }) => {
 
 
     const document = await documentService.createDocument(ownerid, data.tenantId, data.unitId, data.file);
-    return {
+    return json({
         status: 200,
         body: {
             document
         }
-    };
+    });
 });
 

@@ -1,9 +1,10 @@
-import { Column, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { BaseEntity } from "../common/BaseEntity";
 import type { IDocument } from "./IDocument";
 import type { IDocType } from "../document_type/IDocType";
 import { DocType } from "../document_type/DocType";
 
+@Entity()
 export class Document extends BaseEntity implements IDocument {
 
     //should be a foreign key reffering to the user table id
