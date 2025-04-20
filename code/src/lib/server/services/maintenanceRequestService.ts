@@ -66,8 +66,7 @@ export class MaintenanceRequestService {
     
     }
 
-    
-    
-
-
+    async getMaintenanceRequests(): Promise<IMaintenanceRequest[]> {
+        return await this.maintenanceRequestRepository.find();
+    }
 };
