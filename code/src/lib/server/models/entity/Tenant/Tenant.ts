@@ -10,11 +10,11 @@ import { Unit } from "../unit/Unit";
 export class Tenant extends BaseEntity implements ITenant {
     
     // a column that refers to the fk of the user id
-    @Column({type: 'uuid'})
+    // @Column({type: 'uuid'})
     @ManyToOne(()=> Property, (property)=> property.id)
     property: IProperty
 
-    @Column({type: 'uuid'})
+    // @Column({type: 'uuid'})
     @ManyToOne(()=> User, (user)=> user.id)
     @JoinColumn()
     tenant: User
@@ -25,7 +25,7 @@ export class Tenant extends BaseEntity implements ITenant {
     @Column({type: 'timestamp', name: 'end_date'})
     endDate: Date;
 
-    @Column({type: 'uuid'})
+    // @Column({type: 'uuid'})
     @ManyToOne(()=> Unit, (unit)=> unit.id)
     @JoinColumn()
     unit: Unit
