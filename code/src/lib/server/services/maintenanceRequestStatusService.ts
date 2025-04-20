@@ -1,6 +1,6 @@
 import { UserException } from "../exceptions/UserException";
 import type { IMaintenanceRequestStatus } from "../models/entity/maintenance_request_status/IMaintenanceRequestStatus";
-import { MaintenanceStatusType } from "../models/entity/maintenance_status/MaintenanceStatus";
+import { MaintenanceStatus, MaintenanceStatusType } from "../models/entity/maintenance_status/MaintenanceStatus";
 import type { MaintenanceRequestRepository } from "../repositories/maintenance_request/maintenanceRequestRepository";
 import type { MaintenanceRequestStatusRepository } from "../repositories/maintenance_request_status/maintenanceRequestStatusRepository";
 import type { MaintenanceStatusRepository } from "../repositories/maintenance_status/MaintenanceStatusRepository";
@@ -57,82 +57,20 @@ export class MaintenanceRequestStatusService {
     }
 
     async startWorkOnTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
-        const in_progress = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.UPDATE);
-        if (!in_progress) {
-            throw new UserException("Maintenance Status 'UPDATE' does not exist", 400);
-        }
-
-        const request_status = this.maintenanceRequestStatusRepository.update(
-            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
-            {status: in_progress}
-        );
-
-        if (!request_status) {
-            throw new UserException("Failed to update Maintenance Request Status", 400);
-        }
-
-        const res = await this.maintenanceRequestStatusRepository.findOne({
-            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
-        });
-
-        if(!res) {
-            throw new UserException("Failed to find Maintenance Request Status", 400);
-        }
-
-        return res;
-
+        const in_progress = MaintenanceStatusType.UPDATE;   
+        
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, in_progress);
     }
 
     async unAssignTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
-        const unassigned = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.NEW);
-        if (!unassigned) {
-            throw new UserException("Maintenance Status 'NEW' does not exist", 400);
-        }
+        const unassigned_progress = MaintenanceStatusType.UNASSIGNED;
 
-        const request_status = this.maintenanceRequestStatusRepository.update(
-            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
-            {status: unassigned}
-        );
-
-        if (!request_status) {
-            throw new UserException("Failed to update Maintenance Request Status", 400);
-        }
-
-        const res = await this.maintenanceRequestStatusRepository.findOne({
-            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
-        });
-
-        if(!res) {
-            throw new UserException("Failed to find Maintenance Request Status", 400);
-        }
-
-        return res;
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, unassigned_progress);
     }
 
     async completeTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
-        const completed = await this.maintenanceStatusRepository.findByName(MaintenanceStatusType.COMPLETED);
-        if (!completed) {
-            throw new UserException("Maintenance Status 'COMPLETED' does not exist", 400);
-        }
+        const completed_progress = MaintenanceStatusType.COMPLETED;
 
-        const request_status = this.maintenanceRequestStatusRepository.update(
-            {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id},
-            {status: completed}
-        );
-
-        if (!request_status) {
-            throw new UserException("Failed to update Maintenance Request Status", 400);
-        }
-
-        const res = await this.maintenanceRequestStatusRepository.findOne({
-            where: {maintenanceRequestId: maintenance_request_id, userOperatorId: user_operator_id}
-        });
-
-        if(!res) {
-            throw new UserException("Failed to find Maintenance Request Status", 400);
-        }
-
-        return res;
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, completed_progress);
     }
-        
 }
