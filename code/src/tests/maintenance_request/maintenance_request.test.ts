@@ -130,4 +130,17 @@ describe("MaintenanceRequestServie Tests", () => {
 
         expect(maintenance).toEqual(fakeMaintenanceRequest);
     })
+
+    it('should return a list of maintenance requests by operator id', async () => {
+        const operatorId = fakeUser.id;
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const result = await maintenanceRequestService.getMaintenanceRequestByOperatorId(operatorId);
+
+        expect(result).toEqual(mockMaintenanceRequest);
+        expect(maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId).toHaveBeenCalledWith(operatorId);
+    });
 });

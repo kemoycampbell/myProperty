@@ -3,16 +3,24 @@ import type { IMaintenanceRequestPhoto } from "../models/entity/maintenance_requ
 import type { MaintenanceRequestRepository } from "../repositories/maintenance_request/maintenanceRequestRepository";
 import type { MaintenanceRequestPhotoRepository } from "../repositories/maintenance_request_photo/maintenanceRequestPhotoRepository";
 import type { UserRepository } from "../repositories/user/UserRepository";
+import type { DocumentService } from "./documentService";
 
 export class MaintenanceRequestPhotoService {
     private maintenanceRequestPhotoRepository: MaintenanceRequestPhotoRepository;
     private maintenanceRequestRepository: MaintenanceRequestRepository;
     private userRepository: UserRepository;
+    private documentService: DocumentService;
 
-    constructor(maintenanceRequestPhotoRepository: MaintenanceRequestPhotoRepository, maintenanceRequestRepository: MaintenanceRequestRepository, userRepository: UserRepository) {
+    constructor(
+        maintenanceRequestPhotoRepository: MaintenanceRequestPhotoRepository, 
+        maintenanceRequestRepository: MaintenanceRequestRepository, 
+        userRepository: UserRepository, 
+        documentService: DocumentService
+    ) {
         this.maintenanceRequestPhotoRepository = maintenanceRequestPhotoRepository;
         this.maintenanceRequestRepository = maintenanceRequestRepository;
         this.userRepository = userRepository;
+        this.documentService = documentService;
     }
 
     /**
@@ -50,5 +58,16 @@ export class MaintenanceRequestPhotoService {
         const res = await this.maintenanceRequestPhotoRepository.save(request);
 
         return res;
+    }
+
+    async uploadPhoto(maintenance_request_id: string, maintenance_request_status_id: string, user_uploaded_id: string, base64File: string): Promise<IMaintenanceRequestPhoto> {
+        let url: string = await this.documentService.upload(base64File);
+
+        return this.createMaintenanceRequestPhoto(
+            maintenance_request_id,
+            maintenance_request_status_id,
+            user_uploaded_id,
+            url
+        );
     }
 }

@@ -1,6 +1,6 @@
 import { UserException } from "../exceptions/UserException";
 import type { IMaintenanceRequestStatus } from "../models/entity/maintenance_request_status/IMaintenanceRequestStatus";
-import { MaintenanceStatusType } from "../models/entity/maintenance_status/MaintenanceStatus";
+import { MaintenanceStatus, MaintenanceStatusType } from "../models/entity/maintenance_status/MaintenanceStatus";
 import type { MaintenanceRequestRepository } from "../repositories/maintenance_request/maintenanceRequestRepository";
 import type { MaintenanceRequestStatusRepository } from "../repositories/maintenance_request_status/maintenanceRequestStatusRepository";
 import type { MaintenanceStatusRepository } from "../repositories/maintenance_status/MaintenanceStatusRepository";
@@ -54,5 +54,23 @@ export class MaintenanceRequestStatusService {
         const res = await this.maintenanceRequestStatusRepository.save(request);
 
         return res;
+    }
+
+    async startWorkOnTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const in_progress = MaintenanceStatusType.UPDATE;   
+        
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, in_progress);
+    }
+
+    async unAssignTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const unassigned_progress = MaintenanceStatusType.UNASSIGNED;
+
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, unassigned_progress);
+    }
+
+    async completeTask(maintenance_request_id: string, user_operator_id: string): Promise<IMaintenanceRequestStatus> {
+        const completed_progress = MaintenanceStatusType.COMPLETED;
+
+        return this.createMaintenanceRequestStatus(maintenance_request_id, user_operator_id, completed_progress);
     }
 }
