@@ -53,4 +53,20 @@ export class MaintenanceRequestService {
 
         return res;
     }
+
+    async getMaintenanceRequestByOperatorId(operatorId: string): Promise<IMaintenanceRequest[]> {
+        if (!operatorId)
+            throw new UserException("Operator ID is required", 400);
+
+        const requests = await this.maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId(operatorId);
+        if(!requests)
+            throw new UserException("No Maintenance Requests found", 404);
+
+        return requests;
+    
+    }
+
+    async getMaintenanceRequests(): Promise<IMaintenanceRequest[]> {
+        return await this.maintenanceRequestRepository.find();
+    }
 };

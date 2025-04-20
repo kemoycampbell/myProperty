@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {fileTypeFromBuffer} from 'file-type';
 import type { UnitService } from "./unitService";
+import { RoleType } from "../models/entity/role/Role";
 
 export class DocumentService {
     private documentRepository: DocumentRepository;
@@ -74,6 +75,47 @@ export class DocumentService {
         const documents = await this.documentRepository.find({ where: { owner: user.id } });
         return documents;
     }
+    async showDocument(id: string, user_id: string, role: string): Promise<string> {
+        if (!id) {
+            throw new UserException("Document ID is required");
+        }
+    
+        if (!role) {
+            throw new UserException("Role is required");
+        }
+    
+        const roleType: RoleType = role as RoleType;
+        let doc: IDocument | null = null;
+    
+        if (roleType === RoleType.TENANT) {
+            doc = await this.documentRepository.findOne({
+                where: {
+                    tenant: user_id,
+                    id: id,
+                },
+            });
+        } else if (roleType === RoleType.OWNER) {
+            doc = await this.documentRepository.findOne({
+                where: {
+                    owner: user_id,
+                    id: id,
+                },
+            });
+        }
+    
+        if (!doc) {
+            throw new UserException("Document not found");
+        }
+    
+        const file = doc.path;
+        const filePath = path.join(process.cwd(), 'uploads', file);
+    
+        const fileBuffer = await fs.readFile(filePath);
+        const base64Data = fileBuffer.toString("base64");
+    
+        return base64Data;
+    }
+    
 
     async upload(base64File:string) {
         if(!base64File) {

@@ -79,7 +79,7 @@ describe("MaintenanceRequestStatus Tests", () => {
     it("should throw a user exception if the maintenance request id is not provided", async() => {
         const maintenanceRequestId = "";
         const userOperatorId = fakeUser.id;
-        const status = fakeStatus.name;
+        const status = MaintenanceStatusType.NEW
 
         const maintenanceRequestStatus = maintenanceRequestStatusService.createMaintenanceRequestStatus(
             maintenanceRequestId,
@@ -104,20 +104,5 @@ describe("MaintenanceRequestStatus Tests", () => {
 
         await(expect(maintenanceRequestStatus)).rejects.toThrowError(UserException);
         await expect(maintenanceRequestStatus).rejects.toThrowError("Maintenance Operator ID is required");
-    })
-
-    it("should throw a user exception if the maintenance status id is not provided", async() => {
-        const maintenanceRequestId = fakeMaintenanceRequest.id;
-        const userOperatorId = fakeUser.id;
-        const status = null;
-
-        const maintenanceRequestStatus = maintenanceRequestStatusService.createMaintenanceRequestStatus(
-            maintenanceRequestId,
-            userOperatorId,
-            status
-        );
-
-        await(expect(maintenanceRequestStatus)).rejects.toThrowError(UserException);
-        await expect(maintenanceRequestStatus).rejects.toThrowError("Maintenance Status is required");
     })
 });

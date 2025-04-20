@@ -1,4 +1,6 @@
 import database from "$lib/server/database/database";
+import { MaintenanceRequestStatus } from "$lib/server/models/entity/maintenance_request_status/MaintenanceRequestStatus";
+import { MaintenanceStatusType } from "$lib/server/models/entity/maintenance_status/MaintenanceStatus";
 import { MaintenanceRequestRepository } from "$lib/server/repositories/maintenance_request/maintenanceRequestRepository";
 import { MaintenanceStatusRepository } from "$lib/server/repositories/maintenance_status/MaintenanceStatusRepository";
 import { UserRepository } from "$lib/server/repositories/user/UserRepository";
@@ -22,7 +24,7 @@ export const POST = processAPIRequest(async ({ request }) => {
     const res = await service.createMaintenanceRequestStatus(
         data.maintenance_request_id,
         data.user_operator_id,
-        data.status
+        MaintenanceStatusType.NEW
     );
 
     return json({

@@ -61,7 +61,10 @@
     }
 </script>
 
-<div>
+
+
+<div id="body">
+<div id="class-box">
     <p>List of properties</p>
     <button on:click={() => goto('/dashboard/owner/properties/add')}>Add</button>
 
@@ -80,3 +83,45 @@
         <p>No properties found.</p>
     {/if}
 </div>
+</div>
+
+<style>
+	#body {
+		justify-items: center;
+		padding-top: 10%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		left: 0px;
+		z-index: 10;
+        overflow: hidden;
+        position: relative;
+        
+	}
+
+	#class-box {
+		width: 60vw;
+		height: 40vh;
+		max-width: 800px;
+		max-height: 600px;
+		background-color: rgb(50, 50, 50);
+		border: 0.5rem solid #5f0f40;
+		border-top-right-radius: 5rem;
+		border-bottom-left-radius: 5rem;
+
+		padding: 2rem;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+
+
+    ::-webkit-input-placeholder {
+            text-align: center;
+    }
+
+</style>
