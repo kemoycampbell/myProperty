@@ -1,109 +1,142 @@
 <script>
-	import { onMount } from 'svelte';
+    import { onMount } from 'svelte';
 
-	let properties = [];
-	let tenants = [];
-	let units = [];
+    let properties = [];
+    let units = [];
+    let users = [];
 
-	let selectedProperty = null;
-	let selectedUnit = null;
-	let selectedTenant = null;
+    let selectedPropertyId = '';
+    let selectedUnitId = '';
+    let selectedUserId = '';
+    let startDate = '';
+    let endDate = '';
 
-	let token = localStorage.getItem('token');
-	let userInfo = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    function decodeJWT(token) {
+        const payload = token.split('.')[1];
+        return JSON.parse(atob(payload));
+    }
 
-	onMount(async () => {
-		try {
-			const [tenantRes, propertyRes] = await Promise.all([
-				fetch(`/api/user`),
-				fetch(`/api/property/owner/${userInfo.id}`)
-			]);
+    const token = localStorage.getItem('token');
+    let userInfo;
 
-			tenants = (await tenantRes.json()).tenants;
-			properties = (await propertyRes.json()).properties;
-		} catch (err) {
-			console.error("Error loading data:", err);
-		}
-	});
+    if (token) {
+        try {
+            userInfo = decodeJWT(token);
+        } catch (error) {
+            console.error("Error decoding token", error);
+        }
+    }
 
-	// Load units when a property is selected
-	$: if (selectedProperty) {
-		loadUnits(selectedProperty);
-	}
+    // Cargar propiedades y usuarios al montar
+    onMount(async () => {
+        try {
+            const [propertiesRes, usersRes] = await Promise.all([
+                fetch(`/api/property/owner/${userInfo.id}`),
+                fetch(`http://localhost:5173/api/user`)
+            ]);
 
-	async function loadUnits(propertyId) {
-		try {
-			const res = await fetch(`/api/unit/property/${propertyId}`);
-			if (!res.ok) throw new Error("Failed to load units");
-			units = (await res.json()).units;
-		} catch (err) {
-			console.error("Error loading units:", err);
-			units = [];
-		}
-	}
+            if (!propertiesRes.ok) throw new Error(`Failed to fetch properties: ${propertiesRes.status}`);
+            if (!usersRes.ok) throw new Error(`Failed to fetch users: ${usersRes.status}`);
 
-	async function assignTenant() {
-		if (!selectedTenant || !selectedUnit) {
-			alert("Please select both a tenant and a unit");
-			return;
-		}
+            const propertiesData = await propertiesRes.json();
+            const usersData = await usersRes.json();
 
-		try {
-			const res = await fetch(`/api/unit/${selectedUnit}/assign-tenant`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ tenantId: selectedTenant }),
-			});
+            properties = propertiesData.properties;
+            users = usersData.users;
+        } catch (error) {
+            console.error("Error loading data:", error);
+        }
+    });
 
-			if (!res.ok) throw new Error("Assignment failed");
+    // Cargar unidades al seleccionar propiedad
+    async function fetchUnits() {
+        if (!selectedPropertyId) return;
 
-			alert("Tenant assigned successfully!");
-		} catch (err) {
-			console.error("Assignment error:", err);
-			alert("Failed to assign tenant.");
-		}
-	}
+        try {
+            const res = await fetch(`/api/unit/property/${selectedPropertyId}`);
+
+            if (!res.ok) {
+                throw new Error(`Failed to fetch units: ${res.status}`);
+            }
+
+            const data = await res.json();
+            units = data.units;
+        } catch (error) {
+            console.error("Error loading units:", error);
+        }
+    }
+
+    $: selectedPropertyId, fetchUnits();
+
+    // Función para hacer el POST y asignar el inquilino
+    async function assignTenant() {
+        if (!selectedUserId || !selectedUnitId || !startDate || !endDate) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        const payload = {
+            tenant: selectedUserId,
+            unit: selectedUnitId,
+            startDate,
+            endDate
+        };
+
+        try {
+            const res = await fetch(`/api/unit/property/${userInfo.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                throw new Error(`Failed to assign tenant: ${res.status}`);
+            }
+
+            const result = await res.json();
+            alert(result.message || 'Tenant assigned successfully!');
+        } catch (error) {
+            console.error("Error assigning tenant:", error);
+            alert("Error assigning tenant.");
+        }
+    }
 </script>
 
-<h2>Assign Tenant to a Unit</h2>
-
-<!-- Property Select -->
 <div>
-	<label>Property:</label>
-	<select bind:value={selectedProperty}>
-		<option value="" disabled selected>Select a property</option>
-		{#each properties as property}
-			<option value={property.id}>{property.name}</option>
-		{/each}
-	</select>
+    <p>Select a property</p>
+    <select bind:value={selectedPropertyId}>
+        <option value="">Select a property</option>
+        {#each properties as property}
+            <option value={property.id}>{property.name}</option>
+        {/each}
+    </select>
+
+    {#if selectedPropertyId}
+        <p>Select a unit</p>
+        <select bind:value={selectedUnitId}>
+            <option value="">Select a unit</option>
+            {#each units as unit}
+                <option value={unit.id}>{unit.number}</option>
+            {/each}
+        </select>
+    {/if}
+
+    <p>Select a user</p>
+    <select bind:value={selectedUserId}>
+        <option value="">Select a user</option>
+        {#each users as user}
+            <option value={user.id}>{user.firstName} {user.lastName}</option>
+        {/each}
+    </select>
+
+    <p>Start date</p>
+    <input type="date" bind:value={startDate} />
+
+    <p>End date</p>
+    <input type="date" bind:value={endDate} />
+
+    <br /><br />
+    <button on:click={assignTenant}>Assign Tenant</button>
 </div>
-
-<!-- Unit Select (Filtered) -->
-{#if units.length > 0}
-	<div>
-		<label>Unit:</label>
-		<select bind:value={selectedUnit}>
-			<option value="" disabled selected>Select a unit</option>
-			{#each units as unit}
-				<option value={unit.id}>{unit.name}</option>
-			{/each}
-		</select>
-	</div>
-{:else if selectedProperty}
-	<p>Loading units...</p>
-{/if}
-
-<!-- Tenant Select -->
-<div>
-	<label>Tenant:</label>
-	<select bind:value={selectedTenant}>
-		<option value="" disabled selected>Select a tenant</option>
-		{#each tenants as tenant}
-			<option value={tenant.id}>{tenant.name}</option>
-		{/each}
-	</select>
-</div>
-
-<button on:click={assignTenant}>Assign Tenant</button>
