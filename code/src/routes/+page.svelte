@@ -36,7 +36,9 @@
 				} else if (userRole === 'tenant') {
 					goto('/dashboard/tenant');
 				} else if (userRole === 'maintenance manager') {
-					goto('/dashboard/maintenance');
+					goto('/dashboard/maintenance/all');
+				} else if (userRole === 'maintenance operator') {
+					goto('/dashboard/operator');
 				}
 			} catch (error) {
 				console.error('Error decoding token', error);

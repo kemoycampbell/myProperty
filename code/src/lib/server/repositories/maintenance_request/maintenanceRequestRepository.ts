@@ -8,12 +8,19 @@ export class MaintenanceRequestRepository extends Repository<IMaintenanceRequest
     }
 
     async getAllMaintenanceRequestByOperatorId(operatorId: string): Promise<IMaintenanceRequest[]> {
+        console.log("Operator ID:", operatorId); // Debugging
+    
         const requests = await this
-        .createQueryBuilder("request")
-        .innerJoin("maintenance_request_status", "status", "status.maintenance_request_id = request.id")
-        .addSelect("status.operator_id", "status_operator_id")
-        .where("status.operator_id = :operatorId", { operatorId })
-        .getRawMany();
+            .createQueryBuilder("request")
+            .innerJoin(
+                "maintenance_request_status",
+                "status",
+                "status.maintenance_request_id = request.id::text" // Casting explícito aquí
+            )
+            .addSelect("status.userOperatorId", "status_userOperatorId") // Usar el nombre correcto
+            .where("status.user_operator_id = :operatorId", { operatorId }) // No es necesario CAST aquí
+            .getRawMany();
+    
         return requests;
     }
 }

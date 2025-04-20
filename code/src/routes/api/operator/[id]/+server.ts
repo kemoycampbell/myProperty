@@ -4,6 +4,7 @@ import { UnitRepository } from "$lib/server/repositories/unit/unitRepository";
 import { UserRepository } from "$lib/server/repositories/user/UserRepository";
 import { MaintenanceRequestService } from "$lib/server/services/maintenanceRequestService";
 import { processAPIRequest } from "$middleware/apiResponse";
+import { json } from "@sveltejs/kit";
 
 
 const runner = database.createQueryRunner();
@@ -22,10 +23,10 @@ const maintenanceRequestService = new MaintenanceRequestService
 export const GET = processAPIRequest(async ({ params }) => {
     const { id } = params;
     const res = await maintenanceRequestService.getMaintenanceRequestByOperatorId(id);
-    return {
+    return json({
         status: 200,
         body: {
             res
         }
-    }
+    })
 });
