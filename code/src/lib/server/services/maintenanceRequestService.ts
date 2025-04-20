@@ -66,6 +66,22 @@ export class MaintenanceRequestService {
     
     }
 
+    async getMaintenanceRequestById(maintenanceRequestId: string): Promise<IMaintenanceRequest> {
+        if(!maintenanceRequestId)
+            throw new UserException("Maintenance Request ID is required", 400)
+
+        const requests = await this.maintenanceRequestRepository.findOne({
+            where: {
+                id: maintenanceRequestId
+            }
+        })
+
+        if(!requests)
+            throw new UserException("No Maintenance Requests found with that ID", 404);
+
+        return requests;
+    }
+
     async getMaintenanceRequests(): Promise<IMaintenanceRequest[]> {
         return await this.maintenanceRequestRepository.find();
     }
