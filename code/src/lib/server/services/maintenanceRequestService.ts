@@ -83,6 +83,9 @@ export class MaintenanceRequestService {
     }
 
     async getMaintenanceRequests(): Promise<IMaintenanceRequest[]> {
-        return await this.maintenanceRequestRepository.find();
-    }
+        return await this.maintenanceRequestRepository.find({
+            where: { user: { } },
+            relations: ['user']
+        });
+    }  
 };

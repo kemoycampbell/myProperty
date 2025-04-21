@@ -36,7 +36,7 @@
 				} else if (userRole === 'tenant') {
 					goto('/dashboard/tenant');
 				} else if (userRole === 'maintenance manager') {
-					goto('/dashboard/maintenance');
+					goto('/dashboard/maintenance_manager');
 				}
 			} catch (error) {
 				console.error('Error decoding token', error);

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
 
 	let maintenance_request_id = '';
@@ -31,7 +32,7 @@
     }
 
     async function handleMaintenanceRequestAssignment() {
-        const res = await fetch('http://localhost:5173/api/maintenance/assign', {
+        const res = await fetch('http://localhost:5173/api/operator/start', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +45,8 @@
         });
 
         if (res.ok) {
-            // Handle success, e.g., redirect or show a success message
+            alert('Maintenance request assigned successfully!');
+            goto('/dashboard/maintenance_manager/all');
         } else {
             console.error('Failed to assign maintenance request');
         }

@@ -1,13 +1,14 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+    
     let maintenanceRequests: any[] = [];
 
-    // Fetch on mount
-    import { onMount } from "svelte";
     onMount(async () => {
         const res = await fetch('/api/maintenance_request/all');
         if (res.ok) {
             const json = await res.json();
             maintenanceRequests = json.maintenanceRequests;
+            console.log(maintenanceRequests);
         } else {
             console.error("Failed to fetch maintenance requests");
         }

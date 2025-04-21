@@ -13,8 +13,10 @@ const maintenanceStatusRepository = new MaintenanceStatusRepository(runner);
 const userRepository = new UserRepository(runner)
 const maintenanceRequestRepository = new MaintenanceRequestRepository(runner);
 
-const maintenanceRequestStatusService = new MaintenanceRequestStatusService(maintenanceRequestRepository,
-    userRepository, maintenanceStatusRepository
+const maintenanceRequestStatusService = new MaintenanceRequestStatusService(
+    maintenanceRequestRepository,
+    userRepository, 
+    maintenanceStatusRepository
 )
 
 export const POST = processAPIRequest(async ({request }) => {

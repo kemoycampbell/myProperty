@@ -16,4 +16,11 @@ export class MaintenanceRequestRepository extends Repository<IMaintenanceRequest
         .getRawMany();
         return requests;
     }
+
+    async getAllMaintenanceRequests(): Promise<IMaintenanceRequest[]> {
+        return await this
+            .createQueryBuilder("request")
+            .innerJoinAndSelect("request.user", "user")
+            .getMany();
+    }    
 }
