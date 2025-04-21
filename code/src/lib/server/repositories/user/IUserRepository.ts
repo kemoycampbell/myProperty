@@ -14,4 +14,6 @@ import type { Repository } from "typeorm";
  */
 export interface IUserRepository extends Repository<IUser> {
     findByUsername(username: string): Promise<IUser>;
+    
+    findByRole(role: string): Promise<IUser[]>;
 }
