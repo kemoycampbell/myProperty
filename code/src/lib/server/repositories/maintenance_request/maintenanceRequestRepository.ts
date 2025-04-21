@@ -7,6 +7,14 @@ export class MaintenanceRequestRepository extends Repository<IMaintenanceRequest
         super(MaintenanceRequest, queryRunner.manager);
     }
 
+    async getAllMaintenanceRequestByOwnerId(ownerId: string): Promise<IMaintenanceRequest[]> {
+        const requests = await this
+        .createQueryBuilder("request")
+        .where("request.user_requested_id = :ownerId", { ownerId })
+        .getMany();
+        return requests;
+    }
+
     async getAllMaintenanceRequestByOperatorId(operatorId: string): Promise<IMaintenanceRequest[]> {
         const requests = await this
         .createQueryBuilder("request")

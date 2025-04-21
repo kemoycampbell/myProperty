@@ -22,8 +22,6 @@ export class User extends BaseEntity implements IUser {
     password: string;
 
     @ManyToOne(()=> Role, (role)=> role.id)
-    @JoinColumn({
-        name: 'role_id'  
-    })
+    @JoinColumn()
     role: Role
 }

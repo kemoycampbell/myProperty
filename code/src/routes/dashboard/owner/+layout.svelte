@@ -5,7 +5,7 @@
         <a href="/dashboard/owner/accounts">Accounts</a>
         <a href="/dashboard/owner/assign">Assign</a>
         <a href="/dashboard/owner/documents">Documents</a>
-        <a href="/dashboard/maintenance/create">Create Maintenance Request</a>
+        <a href="/dashboard/owner/maintenance">Maintenance</a>
     </header>
     <main>
         <slot />

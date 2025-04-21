@@ -54,6 +54,17 @@ export class MaintenanceRequestService {
         return res;
     }
 
+    async getMaintenanceRequestByOwnerId(ownerId: string): Promise<IMaintenanceRequest[]> {
+        if (!ownerId)
+            throw new UserException("Owner ID is required", 400);
+
+        const requests = await this.maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId(ownerId);
+        if(!requests)
+            throw new UserException("No Maintenance Requests found", 400);
+
+        return requests;
+    }
+
     async getMaintenanceRequestByOperatorId(operatorId: string): Promise<IMaintenanceRequest[]> {
         if (!operatorId)
             throw new UserException("Operator ID is required", 400);

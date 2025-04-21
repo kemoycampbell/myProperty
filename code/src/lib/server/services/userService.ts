@@ -119,21 +119,6 @@ export class UserService {
     }
 
     /**
-     * Get all users with a specific role.
-     * @param role - The role of the users to retrieve.
-     * @returns An array of users with the specified role.
-     */
-    async getAllUsersByRole(role: RoleType): Promise<IUser[]> {
-        const users = await this.repository.findByRole(role);
-
-        if (!users || users.length === 0) {
-            throw new UserException(`No users found with role ${role}`, 400);
-        }
-
-        return users;
-    }
-
-    /**
      * Get a user by their username.
      * @param username - The username of the user.
      * @returns The user object.
