@@ -28,7 +28,10 @@
         goto(`/dashboard/owner/properties/${data.id}/unit`);
     }
 </script>
+<div id="body">
+    <div id="class-box">
 
+  
 <div>
     {#if property}
         <p><strong>Name:</strong> {property.name}</p>
@@ -50,3 +53,48 @@
         <p>Loading...</p>
     {/if}
 </div>
+</div>
+</div>
+
+<style>
+	#body {
+		justify-items: center;
+		padding-top: 10%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		left: 0px;
+		z-index: 10;
+		overflow: hidden;
+		position: relative;
+	}
+
+	#class-box {
+		width: 60vw;
+		height: 40vh;
+		max-width: 800px;
+		max-height: 600px;
+		background-color: rgb(50, 50, 50);
+		border: 0.5rem solid #5f0f40;
+		border-top-right-radius: 5rem;
+		border-bottom-left-radius: 5rem;
+
+		padding: 2rem;
+		text-align: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#class-box button {
+		border-radius: 15px;
+		background: #73ad21;
+		padding: 10px;
+		width: 25%;
+		height: 20%;
+		margin-bottom: 5%;
+		align-self: center;
+	}
+</style>
