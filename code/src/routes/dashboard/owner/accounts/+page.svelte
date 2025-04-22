@@ -40,10 +40,10 @@
 			{#each users as user}
 				<li>
 					<strong>{user.firstName} {user.lastName}</strong>
-					<button on:click={() => goToDetails(user.id)}>View</button>
+					<!-- <button on:click={() => goToDetails(user.id)}>View</button> -->
 					<!-- No edit for this iteration future work! -->
 					<!-- <button on:click={() => goToEdit(user.id)}>Edit</button> -->
-					<button on:click={() => deleteAccount(user.id)}>Delete</button>
+					<!-- <button on:click={() => deleteAccount(user.id)}>Delete</button> -->
 				</li>
 			{/each}
 		{:else}
