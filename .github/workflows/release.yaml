@@ -2,11 +2,11 @@ name: Automate Release
 
 on:
   workflow_run:
-    workflows: ["CI"]  # Must match the name in your ci.yaml
+    workflows: ["CI"]  # Must match your CI workflow's name exactly
     types:
       - completed
     branches:
-      - main
+      - main  # Only trigger on `main` branch
 
 permissions:
   contents: write
@@ -25,4 +25,5 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           release-type: node
-          path: code 
+          path: code
+          package-name: my-property
