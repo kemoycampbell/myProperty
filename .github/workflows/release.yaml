@@ -5,6 +5,8 @@ on:
     workflows: ["CI"]  # Name of the CI workflow (must match the 'name:' field in ci.yaml)
     types:
       - completed
+    branches:
+      - main  # Only trigger on the main branch
 
 jobs:
   release:
