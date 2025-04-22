@@ -1,0 +1,8 @@
+{
+    "release-type": "node",
+    "packages": {
+      "code/": {
+        "package-name": "my-property"
+      }
+    }
+  }

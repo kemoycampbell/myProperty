@@ -2,11 +2,11 @@ name: Automate Release
 
 on:
   workflow_run:
-    workflows: ["CI"]  # Must match your CI workflow's name exactly
+    workflows: ["CI"]
     types:
       - completed
     branches:
-      - main  # Only trigger on `main` branch
+      - main
 
 permissions:
   contents: write
@@ -24,6 +24,6 @@ jobs:
       - name: Run release-please
         uses: googleapis/release-please-action@v4
         with:
-          release-type: node
-          path: code
+          config-file: release-please-config.json
+          manifest-file: release-please-manifest.json
           token: ${{ secrets.GITHUB_TOKEN }}
