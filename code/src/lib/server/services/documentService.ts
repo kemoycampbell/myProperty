@@ -30,6 +30,7 @@ export class DocumentService {
             "application/msword",
             "application/docx",
         ]
+        
     }
 
     async getDocumentById(id: string): Promise<IDocument> {
