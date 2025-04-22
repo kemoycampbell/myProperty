@@ -266,4 +266,46 @@ describe("DocumentService Tests", () => {
         //     expect(result.path).toContain("uploads/");
         // });
     });
+
+    describe("getDocumentsByUserId", () => {
+        it("should throw an error if userId is not provided", async () => {
+            await expect(documentService.getDocumentsByUserId("")).rejects.toThrowError(
+                new UserException("User ID is required")
+            );
+        });
+    
+        it("should throw an error if user is not found", async () => {
+            // Mockear que el servicio de usuario no encuentra el usuario
+            (userService.getById as Mock).mockResolvedValueOnce(null);
+    
+            await expect(documentService.getDocumentsByUserId("123")).rejects.toThrowError(
+                new UserException("User not found")
+            );
+        });
+    
+        it("should return an empty array if no documents are found for the user", async () => {
+            // Mockear que el repositorio de documentos no encuentra documentos
+            (documentRepository.find as Mock).mockResolvedValueOnce([]);
+    
+            const result = await documentService.getDocumentsByUserId("123456");
+            expect(result).toBeDefined();
+            expect(result.length).toBe(0);
+        });
+    
+        it("should return the documents if found for the user", async () => {
+            // Mockear que el repositorio de documentos encuentra documentos
+            const mockDocuments: IDocument[] = [
+                { ...fakeDocument, id: "doc1", owner: "123456" },
+                { ...fakeDocument, id: "doc2", owner: "123456" },
+            ];
+            (documentRepository.find as Mock).mockResolvedValueOnce(mockDocuments);
+    
+            const result = await documentService.getDocumentsByUserId("123456");
+            expect(result).toBeDefined();
+            expect(result.length).toBe(2);
+            expect(result[0].id).toBe("doc1");
+            expect(result[1].id).toBe("doc2");
+            expect(result[0].owner).toBe("123456");
+        });
+    });
 });
