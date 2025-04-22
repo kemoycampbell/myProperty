@@ -10,6 +10,9 @@ import { PropertyService } from "$lib/server/services/propertyService";
 import { PropertyRepository } from "$lib/server/repositories/property/propertyRepository";
 import { processAPIRequest } from "$middleware/apiResponse";
 import { json } from "@sveltejs/kit";
+import { DocType, DocumentType } from "$lib/server/models/entity/document_type/DocType";
+import { UserException } from "$lib/server/exceptions/UserException";
+import { DocumentTypeRepository } from "$lib/server/repositories/document/documentTypeRepository";
 
 const runner = database.createQueryRunner();
 
@@ -27,6 +30,7 @@ const unitService = new UnitService(unitRepository, propertyService);
 
 
 const documentService = new DocumentService(documentRepository, userService, unitService);
+const documentTypeRepository = new DocumentTypeRepository(runner);
 
 export const GET = processAPIRequest(async ({ params }) => {
     const { id } = params;
@@ -43,8 +47,31 @@ export const POST = processAPIRequest(async ({ request, params }) => {
     const { id } = params;
     const data = await request.json();
 
+    //use the runner to get the doctype
 
-    const document = await documentService.createDocument(id, data.tenantId, data.unitId, data.file);
+    const docTypeToEnum = Object.values(DocumentType).includes(data.docType)
+  ? data.docType as DocumentType
+  : undefined;
+
+  if(!docTypeToEnum) {
+    throw new UserException("Invalid document type");}
+
+
+
+    const docType = await documentTypeRepository.findByName(docTypeToEnum);
+    if(!docType) {
+        throw new UserException("Document type not found");
+    }
+
+    console.log("DocType: ", docType);
+
+    // const docType:DocType = new DocType();
+    // docType.name = data.docType;
+    // console.log("DocType: ", docType);
+    
+
+
+    const document = await documentService.createDocument(id, data.tenantId, data.unitId, data.file, docType);
     return json({
         status: 200,
         body: {

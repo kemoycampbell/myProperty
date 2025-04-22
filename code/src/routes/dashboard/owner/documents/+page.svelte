@@ -70,6 +70,7 @@
           <strong>Created At:</strong> {new Date(doc.createdAt).toLocaleString()} <br />
           <strong>Unit ID:</strong> {doc.unit} <br />
           <strong>Tenant ID:</strong> {doc.tenant} <br />
+          <strong>Tenant ID:</strong> {doc.tenant} <br />
         </li>
       {/each}
     </ul>

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {fileTypeFromBuffer} from 'file-type';
 import type { UnitService } from "./unitService";
 import { RoleType } from "../models/entity/role/Role";
+import type { DocType } from "../models/entity/document_type/DocType";
 
 export class DocumentService {
     private documentRepository: DocumentRepository;
@@ -50,7 +51,7 @@ export class DocumentService {
             throw new UserException("Owner ID is required");
         }
 
-        let documents: IDocument[] = await this.documentRepository.find({ where: { owner: ownerId } });
+        let documents: IDocument[] = await this.documentRepository.find({ where: { owner: ownerId },relations: ["docType"] });
 
         if(!documents || documents.length === 0) {
             documents = [];
@@ -72,7 +73,12 @@ export class DocumentService {
             throw new UserException("User not found");
         }
 
-        const documents = await this.documentRepository.find({ where: { owner: user.id } });
+        const documents = await this.documentRepository.find({ 
+            where: [
+            
+            { owner: user.id},
+            {tenant: user.id},
+        ]});
         return documents;
     }
     async showDocument(id: string, user_id: string, role: string): Promise<string> {
@@ -123,7 +129,7 @@ export class DocumentService {
         }
     
         //store the file in a buffer
-        const buffer  = Buffer.from(base64File, 'base64');
+        const buffer  = await Buffer.from(base64File, 'base64');
 
         //get the file type
         const type = await fileTypeFromBuffer(buffer);
@@ -150,10 +156,10 @@ export class DocumentService {
             throw new UserException("An error occurred saving the file. Please try again");
         }
 
-        return filePath;
+        return filename;
     }
 
-    async createDocument(owner: string, tenant: string, unit: string, base64File:string): Promise<IDocument> {
+    async createDocument(owner: string, tenant: string, unit: string, base64File:string, type:DocType): Promise<IDocument> {
         if(!owner) {
             throw new UserException("Owner id is required");
         }
@@ -195,7 +201,8 @@ export class DocumentService {
             owner,
             tenant,
             unit,
-            path
+            path,
+            docType: type
         });
 
         return await this.documentRepository.save(document);

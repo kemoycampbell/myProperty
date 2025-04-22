@@ -6,15 +6,16 @@
 
     let userInfo;
 
-    onMount(() => {
+	//async onMount function to fetch the user info
+
+	onMount(async () => {
 		userInfo = getUserInfo();
 		console.log(userInfo);
 
-		// you could fetch documents here too, e.g.:
-		// fetchDocuments(userInfo.id);
+		const response = await fetch(`/api/tenant/document/${userInfo.id}`);
 	});
 
- 
+
 
 </script>
 

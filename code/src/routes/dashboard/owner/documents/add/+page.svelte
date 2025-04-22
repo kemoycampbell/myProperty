@@ -7,6 +7,8 @@
   let selectedUnit = "";
   let selectedUser = "";
   let file = null;
+  let documentTypes = [];
+  let selectedDocumentType = "";
 
   let owner = "";
 
@@ -51,7 +53,22 @@
     } catch (error) {
       console.error("Error loading users:", error);
     }
+
+    try {
+    const docTypeRes = await fetch("http://localhost:5173/api/document/types");
+    if (!docTypeRes.ok) {
+      throw new Error(`Failed to fetch document types: ${docTypeRes.status}`);
+    }
+    const docTypeData = await docTypeRes.json();
+    console.log(docTypeData);
+    documentTypes = [...docTypeData.body.types];
+    console.log(documentTypes);
+  } catch (error) {
+    console.error("Error loading document types:", error);
+  }
   });
+
+
 
   async function handlePropertyChange(event) {
     selectedProperty = event.target.value;
@@ -116,6 +133,7 @@
               tenantId: selectedUser,
               unitId: selectedUnit,
               file: base64File,
+              docType: selectedDocumentType,
             }),
           });
 
@@ -163,6 +181,14 @@
     <option value="">-- Select User --</option>
     {#each users as user}
       <option value={user.id}>{user.firstName} {user.lastName}</option>
+    {/each}
+  </select>
+
+  <p>Select a Document Type</p>
+  <select bind:value={selectedDocumentType}>
+    <option value="">-- Select a document type --</option>
+    {#each documentTypes as doc}
+      <option value={doc}>{doc}</option>
     {/each}
   </select>
 
