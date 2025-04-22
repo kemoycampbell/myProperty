@@ -26,5 +26,4 @@ jobs:
         with:
           release-type: node
           path: code
-          package-name: my-property
           token: ${{ secrets.GITHUB_TOKEN }}
