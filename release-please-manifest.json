@@ -1,5 +1,3 @@
 {
-    "code/": {
-      "release-type": "node"
-    }
-  }
+    "code": "1.0.0"
+}
