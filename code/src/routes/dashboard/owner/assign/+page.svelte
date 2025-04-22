@@ -106,45 +106,47 @@
 
 <div id="body">
 	<div id="class-box">
-            
-			<p>Select a property</p>
-			<select bind:value={selectedPropertyId}>
-				<option value="">Select a property</option>
-				{#each properties as property}
-					<option value={property.id}>{property.name}</option>
+        <div id="partition1">
+
+        <div id="partition2">
+		<p>Select a property</p>
+		<select bind:value={selectedPropertyId}>
+			<option value="">Select a property</option>
+			{#each properties as property}
+				<option value={property.id}>{property.name}</option>
+			{/each}
+		</select>
+
+		{#if selectedPropertyId}
+			<p>Select a unit</p>
+			<select bind:value={selectedUnitId}>
+				<option value="">Select a unit</option>
+				{#each units as unit}
+					<option value={unit.id}>{unit.number}</option>
 				{/each}
 			</select>
+		{/if}
+        </div>
+        <div id="partition2">
+		<p>Select a user</p>
+		<select bind:value={selectedUserId}>
+			<option value="">Select a user</option>
+			{#each users as user}
+				<option value={user.id}>{user.firstName} {user.lastName}</option>
+			{/each}
+		</select>
 
-			{#if selectedPropertyId}
-				<p>Select a unit</p>
-				<select bind:value={selectedUnitId}>
-					<option value="">Select a unit</option>
-					{#each units as unit}
-						<option value={unit.id}>{unit.number}</option>
-					{/each}
-				</select>
-			{/if}
+		<p>Start date</p>
+		<input type="date" bind:value={startDate} />
 
-     
-      
-			<p>Select a user</p>
-			<select bind:value={selectedUserId}>
-				<option value="">Select a user</option>
-				{#each users as user}
-					<option value={user.id}>{user.firstName} {user.lastName}</option>
-				{/each}
-			</select>
-
-			<p>Start date</p>
-			<input type="date" bind:value={startDate} />
-
-			<p>End date</p>
-			<input type="date" bind:value={endDate} />
-
-			<br /><br />
-			<button on:click={assignTenant}>Assign Tenant</button>
-
-		</div>
+		<p>End date</p>
+		<input type="date" bind:value={endDate} />
+        </div>
+		<br /><br />
+        <button on:click={assignTenant}>Assign Tenant</button>
+    </div>
+		
+	</div>
 </div>
 
 <style>
@@ -164,30 +166,30 @@
 
 	#class-box {
 		width: 60vw;
-    height: 40vh;
-    max-width: 800px;
-    max-height: 600px;
-    background-color: rgb(50, 50, 50);
-    border: 0.5rem solid #5f0f40;
-    border-top-right-radius: 5rem;
-    border-bottom-left-radius: 5rem;
-    padding: 2rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: stretch;
-    flex-wrap: wrap;
+		height: 40vh;
+		max-width: 800px;
+		max-height: 600px;
+		background-color: rgb(50, 50, 50);
+		border: 0.5rem solid #5f0f40;
+		border-top-right-radius: 5rem;
+		border-bottom-left-radius: 5rem;
+		padding: 2rem;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: stretch;
+		flex-wrap: wrap;
 	}
 
-    #class-box button {
-        border-radius: 15px;
-        background: #73AD21;
-        padding: 10px;
-        width: 30%;
-        height: 35%;
-        margin: 0%;
-    }
+	#class-box button {
+		border-radius: 15px;
+		background: #73ad21;
+		padding: 10px;
+		width: 30%;
+		height: 35%;
+		margin: 0%;
+	}
 
 	#login-Form {
 		display: flex;
@@ -211,14 +213,15 @@
 
 	#partition1 {
 		display: flex;
-		flex-direction: column;
+        flex-wrap: wrap;
 		align-items: center;
-		column-gap: 0.51rem;
+        padding-bottom: 10%;
+        justify-content: center;
 	}
 
-    #partition2 {
+	#partition2 {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
 		column-gap: 0.51rem;
 	}
