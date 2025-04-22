@@ -59,7 +59,7 @@ export class MaintenanceRequestService {
             throw new UserException("Owner ID is required", 400);
 
         const requests = await this.maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId(ownerId);
-        if(!requests)
+        if(!requests || requests.length === 0)
             throw new UserException("No Maintenance Requests found", 400);
 
         return requests;
@@ -70,8 +70,8 @@ export class MaintenanceRequestService {
             throw new UserException("Operator ID is required", 400);
 
         const requests = await this.maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId(operatorId);
-        if(!requests)
-            throw new UserException("No Maintenance Requests found", 404);
+        if(!requests || requests.length === 0)
+            throw new UserException("No Maintenance Requests found", 400);
 
         return requests;
     
@@ -88,7 +88,7 @@ export class MaintenanceRequestService {
         })
 
         if(!requests)
-            throw new UserException("No Maintenance Requests found with that ID", 404);
+            throw new UserException("No Maintenance Requests found with that ID", 400);
 
         return requests;
     }

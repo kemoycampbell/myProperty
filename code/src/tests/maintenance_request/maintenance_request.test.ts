@@ -8,7 +8,7 @@ import type { MaintenanceRequestRepository } from "$lib/server/repositories/main
 import type { UnitRepository } from "$lib/server/repositories/unit/unitRepository";
 import type { UserRepository } from "$lib/server/repositories/user/UserRepository";
 import { MaintenanceRequestService } from "$lib/server/services/maintenanceRequestService";
-import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
 let maintenanceRequestRepository: Partial<MaintenanceRequestRepository>;
 let unitRepository: Partial<UnitRepository>;
@@ -142,5 +142,143 @@ describe("MaintenanceRequestServie Tests", () => {
 
         expect(result).toEqual(mockMaintenanceRequest);
         expect(maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId).toHaveBeenCalledWith(operatorId);
+    });
+
+    // Tests for getMaintenanceRequestByOwnerId
+    it('should throw a user exception if the owner id is not provided', async () => {
+        const ownerId = "";
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOwnerId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestByOwnerId(ownerId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Owner ID is required");
+    });
+
+    it('should throw a user exception if no maintenance requests are found', async () => {
+        const ownerId = fakeUser.id;
+        const mockMaintenanceRequest = [];
+
+        // Mock the getAllMaintenanceRequestByOwnerId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestByOwnerId(ownerId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("No Maintenance Requests found");
+    });
+
+
+    it('should return a list of maintenance requests by owner id', async () => {
+        const ownerId = fakeUser.id;
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOwnerId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const result = await maintenanceRequestService.getMaintenanceRequestByOwnerId(ownerId);
+
+        expect(result).toEqual(mockMaintenanceRequest);
+        expect(maintenanceRequestRepository.getAllMaintenanceRequestByOwnerId).toHaveBeenCalledWith(ownerId);
+    });
+
+    // Tests for getMaintenanceRequestByOperatorId
+    it('should throw a user exception if the operator id is not provided', async () => {
+        const operatorId = "";
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestByOperatorId(operatorId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Operator ID is required");
+    });
+
+    it('should throw a user exception if no maintenance requests are found for the operator id', async () => {
+        const operatorId = fakeUser.id;
+        const mockMaintenanceRequest = null;
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestByOperatorId(operatorId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("No Maintenance Requests found");
+    });
+
+    it('should return a list of maintenance requests by operator id', async () => {
+        const operatorId = fakeUser.id;
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const result = await maintenanceRequestService.getMaintenanceRequestByOperatorId(operatorId);
+
+        expect(result).toEqual(mockMaintenanceRequest);
+        expect(maintenanceRequestRepository.getAllMaintenanceRequestByOperatorId).toHaveBeenCalledWith(operatorId);
+    });
+
+    // Tests for getMaintenanceRequestById
+    it('should throw a user exception if the maintenance request id is not provided', async () => {
+        const maintenanceRequestId = "";
+        const mockMaintenanceRequest = [fakeMaintenanceRequest];
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.findOne = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestById(maintenanceRequestId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("Maintenance Request ID is required");
+    });
+
+    it('should throw a user exception if no maintenance requests are found for the maintenance request id', async () => {
+        const maintenanceRequestId = fakeMaintenanceRequest.id;
+        const mockMaintenanceRequest = null;
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.findOne = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const maintenance = maintenanceRequestService.getMaintenanceRequestById(maintenanceRequestId);
+
+        await(expect(maintenance)).rejects.toThrowError(UserException);
+        await expect(maintenance).rejects.toThrowError("No Maintenance Requests found with that ID");
+    });
+
+    it('should return a maintenance request by id', async () => {
+        const maintenanceRequestId = fakeMaintenanceRequest.id;
+        const mockMaintenanceRequest = fakeMaintenanceRequest;
+
+        // Mock the getAllMaintenanceRequestByOperatorId method
+        maintenanceRequestRepository.findOne = vi.fn().mockResolvedValue(mockMaintenanceRequest);
+
+        const result = await maintenanceRequestService.getMaintenanceRequestById(maintenanceRequestId);
+
+        expect(result).toEqual(mockMaintenanceRequest);
+        expect(maintenanceRequestRepository.findOne).toHaveBeenCalledWith({
+            where: {
+                id: maintenanceRequestId
+            }
+        });
+    });
+
+    // Tests for getMaintenanceRequests
+    it('should return a list of all maintenance requests', async () => {
+        const mockMaintenanceRequests = [fakeMaintenanceRequest];
+
+        // Mock the find method
+        maintenanceRequestRepository.find = vi.fn().mockResolvedValue(mockMaintenanceRequests);
+
+        const result = await maintenanceRequestService.getMaintenanceRequests();
+
+        expect(result).toEqual(mockMaintenanceRequests);
+        expect(maintenanceRequestRepository.find).toHaveBeenCalled();
     });
 });
