@@ -2,19 +2,25 @@ name: Automate Release
 
 on:
   workflow_run:
-    workflows: ["CI"]       # Name of the CI workflow (from ci.yaml)
+    workflows: ["CI"]  # Name of the CI workflow (must match the 'name:' field in ci.yaml)
     types:
       - completed
 
 jobs:
   release:
-    defaults:
-    run:
-      working-directory: ./code
-    if: ${{ github.event.workflow_run.conclusion == 'success' }} #we only want the release to run if the CI workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # Only run if CI succeeded
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./code
 
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Run release-please
+        uses: google-github-actions/release-please-action@v4
         with:
           release-type: node
+          package-name: "my-property"                  
+
