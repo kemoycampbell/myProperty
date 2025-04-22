@@ -7,14 +7,18 @@ import type { DocumentRepository } from "$lib/server/repositories/document/Docum
 import { DocumentService } from "$lib/server/services/documentService";
 import type { UserService } from "$lib/server/services/userService";
 import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
-import fs from 'fs';
-import path from 'path';
+import { promises as fs } from "fs";
+
 import type { UnitService } from "$lib/server/services/unitService";
 import type { IUnit } from "$lib/server/models/entity/unit/IUnit";
 import type { IProperty } from "$lib/server/models/entity/property/IProperty";
 
+import { fileURLToPath } from "url";
+import path from "path";
+
 // Obtener __dirname en módulos ES
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.resolve(path.dirname(__filename));
 
 describe("DocumentService Tests", () => {
     let documentService: DocumentService;
@@ -164,27 +168,35 @@ describe("DocumentService Tests", () => {
             );
         });
 
-        // it("should return the base64 file content if document is found", async () => {
-        //     const mockFilePath = path.resolve(__dirname, "test-file.txt"); // Usar path.resolve para evitar problemas de rutas
-        //     const mockFileContent = "Hello, world!";
-            
-        //     // Crear el archivo temporal
-        //     await fs.promises.writeFile(mockFilePath, mockFileContent);
+        it("should return the base64 file content if document is found", async () => {
+            // Crear la carpeta uploads si no existe
+            const uploadsDir = path.join(process.cwd(), "uploads");
+            await fs.mkdir(uploadsDir, { recursive: true });
         
-        //     // Simular el documento encontrado
-        //     (documentRepository.findOne as Mock).mockResolvedValueOnce({
-        //         ...fakeDocument,
-        //         path: mockFilePath, // Usar la ruta completa del archivo
-        //     });
+            const filename = "test-file.txt";
+            const fullPath = path.join(uploadsDir, filename);
+            const mockFileContent = "Hello, world!";
         
-        //     // Llamar al método showDocument
-        //     const result = await documentService.showDocument("123456", "123456", RoleType.OWNER);
-        //     expect(result).toBeDefined();
-        //     expect(Buffer.from(result, "base64").toString()).toBe(mockFileContent);
+            try {
+                // Crear el archivo dentro de uploads/
+                await fs.writeFile(fullPath, mockFileContent);
         
-        //     // Limpiar el archivo temporal
-        //     await fs.promises.unlink(mockFilePath);
-        // });
+                // Simular el documento encontrado
+                (documentRepository.findOne as Mock).mockResolvedValueOnce({
+                    ...fakeDocument,
+                    path: filename, // Solo el nombre del archivo
+                });
+        
+                // Llamar al método showDocument
+                const result = await documentService.showDocument("123456", "123456", RoleType.OWNER);
+                expect(result).toBeDefined();
+                expect(Buffer.from(result, "base64").toString()).toBe(mockFileContent);
+            } finally {
+                // Limpiar el archivo de prueba
+                await fs.unlink(fullPath).catch(() => {});
+            }
+        });
+        
     });
 
     describe("upload", () => {
