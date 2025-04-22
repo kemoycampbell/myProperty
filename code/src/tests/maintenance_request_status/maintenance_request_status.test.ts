@@ -1,108 +1,146 @@
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { UserException } from "$lib/server/exceptions/UserException";
-import type { IMaintenanceRequest } from "$lib/server/models/entity/maintenance_request/IMaintenanceRequest";
-import type { MaintenanceRequest } from "$lib/server/models/entity/maintenance_request/MaintenanceRequest";
-import type { IMaintenanceRequestStatus } from "$lib/server/models/entity/maintenance_request_status/IMaintenanceRequestStatus";
-import { MaintenanceStatus, MaintenanceStatusType } from "$lib/server/models/entity/maintenance_status/MaintenanceStatus";
-import { Role, RoleType } from "$lib/server/models/entity/role/Role";
-import type { IUser } from "$lib/server/models/entity/User/IUser";
-import type { MaintenanceRequestRepository } from "$lib/server/repositories/maintenance_request/maintenanceRequestRepository";
-import type { MaintenanceRequestStatusRepository } from "$lib/server/repositories/maintenance_request_status/maintenanceRequestStatusRepository";
-import type { MaintenanceStatusRepository } from "$lib/server/repositories/maintenance_status/MaintenanceStatusRepository";
-import type { UserRepository } from "$lib/server/repositories/user/UserRepository";
 import { MaintenanceRequestStatusService } from "$lib/server/services/maintenanceRequestStatusService";
-import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
+import { MaintenanceStatusType, MaintenanceStatus } from "$lib/server/models/entity/maintenance_status/MaintenanceStatus";
+import type { MaintenanceRequestRepository } from "$lib/server/repositories/maintenance_request/maintenanceRequestRepository";
+import type { UserRepository } from "$lib/server/repositories/user/UserRepository";
+import type { MaintenanceStatusRepository } from "$lib/server/repositories/maintenance_status/MaintenanceStatusRepository";
+import type { MaintenanceRequestStatusRepository } from "$lib/server/repositories/maintenance_request_status/maintenanceRequestStatusRepository";
+import type { IMaintenanceRequest } from "$lib/server/models/entity/maintenance_request/IMaintenanceRequest";
+import type { IUser } from "$lib/server/models/entity/User/IUser";
+import type { IMaintenanceRequestStatus } from "$lib/server/models/entity/maintenance_request_status/IMaintenanceRequestStatus";
 
+let service: MaintenanceRequestStatusService;
 let maintenanceRequestRepository: Partial<MaintenanceRequestRepository>;
 let userRepository: Partial<UserRepository>;
 let maintenanceStatusRepository: Partial<MaintenanceStatusRepository>;
-let maintenanceRequestStatusService: MaintenanceRequestStatusService;
+let maintenanceRequestStatusRepository: Partial<MaintenanceRequestStatusRepository>;
 
-describe("MaintenanceRequestStatus Tests", () => {
-    const fakeMaintenanceRequest: IMaintenanceRequest = {
-        id: "1",
-        userRequestedId: "1",
-        unitId: "1",
-        description: "a fake maintenance request",
-        createdAt: new Date(),
-        updatedAt: new Date()
-    }
+const fakeMaintenanceRequest: IMaintenanceRequest = {
+  id: "1",
+  userRequestedId: "user1",
+  unitId: "unit1",
+  description: "Test request",
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
 
-    const fakeRole = new Role();
-    fakeRole.name = RoleType.MAINTENANCE_OPERATOR;
+const fakeUser: IUser = {
+  id: "user1",
+  firstName: "Test",
+  lastName: "User",
+  email: "test@example.com",
+  username: "testuser",
+  password: "pass",
+  role: { name: "MAINTENANCE_OPERATOR" } as any,
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
 
-    const fakeUser: IUser = {
-        id: "123456",
-        firstName: "test",
-        lastName: "test",
-        email: "test@example.com",
-        username: "testuser",
-        password: "password123",
-        role: fakeRole,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    }
+const fakeStatus = new MaintenanceStatus();
+fakeStatus.name = MaintenanceStatusType.NEW;
 
-    const fakeStatus = new MaintenanceStatus();
-    fakeStatus.name = MaintenanceStatusType.NEW;
+const fakeRequestStatus: IMaintenanceRequestStatus = {
+  id: "status1",
+  maintenanceRequestId: "1",
+  userOperatorId: "user1",
+  status: fakeStatus,
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
 
-    const fakeMaintenanceRequestStatus: IMaintenanceRequestStatus = {
-        id: "1",
-        maintenanceRequestId: "123",
-        userOperatorId: "1",
-        status: fakeStatus,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    }
+beforeEach(() => {
+  maintenanceRequestRepository = {
+    findOne: vi.fn().mockResolvedValue(fakeMaintenanceRequest)
+  };
+  userRepository = {
+    findOne: vi.fn().mockResolvedValue(fakeUser)
+  };
+  maintenanceStatusRepository = {
+    findByName: vi.fn().mockResolvedValue(fakeStatus)
+  };
+  maintenanceRequestStatusRepository = {
+    save: vi.fn().mockResolvedValue(fakeRequestStatus)
+  };
 
-    beforeEach(() => {
-        // Mock Maintenance Request Repository's findOne function
-        maintenanceRequestRepository = {
-            findOne: vi.fn().mockResolvedValue(fakeMaintenanceRequest)
-        } as Partial<MaintenanceRequestRepository>;
+  service = new MaintenanceRequestStatusService(
+    maintenanceRequestRepository as MaintenanceRequestRepository,
+    userRepository as UserRepository,
+    maintenanceStatusRepository as MaintenanceStatusRepository
+  );
 
-        //  Mock User Repository's findOne function
-        userRepository = {
-            findOne: vi.fn().mockResolvedValue(fakeUser)
-        } as Partial<UserRepository>;
-
-        maintenanceStatusRepository = {
-            findByName: vi.fn().mockResolvedValue(fakeStatus)
-        } as Partial<MaintenanceStatusRepository>;
-
-        maintenanceRequestStatusService = new MaintenanceRequestStatusService(
-            maintenanceRequestRepository as MaintenanceRequestRepository,
-            userRepository as UserRepository,
-            maintenanceStatusRepository as MaintenanceStatusRepository
-        );
-    });
-
-    it("should throw a user exception if the maintenance request id is not provided", async() => {
-        const maintenanceRequestId = "";
-        const userOperatorId = fakeUser.id;
-        const status = MaintenanceStatusType.NEW
-
-        const maintenanceRequestStatus = maintenanceRequestStatusService.createMaintenanceRequestStatus(
-            maintenanceRequestId,
-            userOperatorId,
-            status
-        );
-
-        await(expect(maintenanceRequestStatus)).rejects.toThrowError(UserException);
-        await expect(maintenanceRequestStatus).rejects.toThrowError("Maintenance Request ID is required");
-    })
-
-    it("should throw a user exception if the operator id is not provided", async() => {
-        const maintenanceRequestId = fakeMaintenanceRequest.id;
-        const userOperatorId = "";
-        const status = fakeStatus.name;
-
-        const maintenanceRequestStatus = maintenanceRequestStatusService.createMaintenanceRequestStatus(
-            maintenanceRequestId,
-            userOperatorId,
-            status
-        );
-
-        await(expect(maintenanceRequestStatus)).rejects.toThrowError(UserException);
-        await expect(maintenanceRequestStatus).rejects.toThrowError("Maintenance Operator ID is required");
-    })
+  // Manually inject the missing repository since it's not in the constructor
+  (service as any).maintenanceRequestStatusRepository = maintenanceRequestStatusRepository;
 });
+
+describe("createMaintenanceRequestStatus", () => {
+  it("throws if maintenance_request_id is missing", async () => {
+    await expect(service.createMaintenanceRequestStatus("", "user1", MaintenanceStatusType.NEW))
+      .rejects.toThrow("Maintenance Request ID is required");
+  });
+
+  it("throws if user_operator_id is missing", async () => {
+    await expect(service.createMaintenanceRequestStatus("1", "", MaintenanceStatusType.NEW))
+      .rejects.toThrow("Maintenance Operator ID is required");
+  });
+
+  it("throws if status is missing", async () => {
+    await expect(service.createMaintenanceRequestStatus("1", "user1", "" as any))
+      .rejects.toThrow("Maintenance Status is required");
+  });
+
+  it("throws if maintenance request doesn't exist", async () => {
+    (maintenanceRequestRepository.findOne as any).mockResolvedValueOnce(null);
+    await expect(service.createMaintenanceRequestStatus("1", "user1", MaintenanceStatusType.NEW))
+      .rejects.toThrow("Maintenance Request does not exist");
+  });
+
+  it("throws if user doesn't exist", async () => {
+    (userRepository.findOne as any).mockResolvedValueOnce(null);
+    await expect(service.createMaintenanceRequestStatus("1", "user1", MaintenanceStatusType.NEW))
+      .rejects.toThrow("Maintenance Operator does not exist");
+  });
+
+  it("creates status when valid", async () => {
+    const result = await service.createMaintenanceRequestStatus("1", "user1", MaintenanceStatusType.NEW);
+    expect(result).toEqual(fakeRequestStatus);
+    expect(maintenanceRequestStatusRepository.save).toHaveBeenCalledWith({
+      maintenanceRequestId: "1",
+      userOperatorId: "user1",
+      status: fakeStatus
+    });
+  });
+});
+
+describe("startWorkOnTask", () => {
+    it("calls createMaintenanceRequestStatus with UPDATE", async () => {
+      const spy = vi
+        .spyOn(service, "createMaintenanceRequestStatus")
+        .mockResolvedValue(fakeRequestStatus);
+      const result = await service.startWorkOnTask("1", "user1");
+      expect(spy).toHaveBeenCalledWith("1", "user1", MaintenanceStatusType.UPDATE);
+      expect(result).toEqual(fakeRequestStatus);
+    });
+  });
+  
+describe("unAssignTask", () => {
+    it("calls createMaintenanceRequestStatus with UNASSIGNED", async () => {
+      const spy = vi
+        .spyOn(service, "createMaintenanceRequestStatus")
+        .mockResolvedValue(fakeRequestStatus);
+      const result = await service.unAssignTask("1", "user1");
+      expect(spy).toHaveBeenCalledWith("1", "user1", MaintenanceStatusType.UNASSIGNED);
+      expect(result).toEqual(fakeRequestStatus);
+    });
+  });
+  
+describe("completeTask", () => {
+    it("calls createMaintenanceRequestStatus with COMPLETED", async () => {
+      const spy = vi
+        .spyOn(service, "createMaintenanceRequestStatus")
+        .mockResolvedValue(fakeRequestStatus);
+      const result = await service.completeTask("1", "user1");
+      expect(spy).toHaveBeenCalledWith("1", "user1", MaintenanceStatusType.COMPLETED);
+      expect(result).toEqual(fakeRequestStatus);
+    });
+  });
