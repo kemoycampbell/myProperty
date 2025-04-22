@@ -7,22 +7,27 @@ on:
       - completed
     branches:
       - main  # Only trigger on the main branch
+  
+  permissions:
+    contents: write
+    pull-requests: write
+
+  #set the root directory of where the code is
+  defaults:
+  run:
+    working-directory: ./code
 
 jobs:
   release:
     if: ${{ github.event.workflow_run.conclusion == 'success' }} # Only run if CI succeeded
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./code
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
       - name: Run release-please
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         with:
-          release-type: node
-          package-name: "my-property"                  
+          release-type: node                
 
