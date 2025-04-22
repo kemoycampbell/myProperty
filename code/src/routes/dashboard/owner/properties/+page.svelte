@@ -118,7 +118,16 @@
 		justify-content: center;
 	}
 
-
+    #class-box button{
+        border-radius: 15px;
+		background: #73ad21;
+		padding: 10px;
+		width: 25%;
+		height: 20%;
+        margin-bottom: 5%;
+        align-self: center;
+		
+    }
 
     ::-webkit-input-placeholder {
             text-align: center;
