@@ -217,16 +217,36 @@ describe("DocumentService Tests", () => {
 
         // it("should upload the file successfully if valid", async () => {
         //     // Simular un archivo PDF válido con una cabecera real
-        //     const validBase64File = Buffer.from("%PDF-1.4\n%Hello, this is a simulated PDF file").toString("base64");
+        //     const fileContent = "%PDF-1.4\n%Hello, this is a simulated PDF file";
+        //     const validBase64File = Buffer.from(fileContent).toString("base64");
+        //     const base64String = `data:application/pdf;base64,${validBase64File}`;
         
         //     // Mockear las operaciones de escritura y lectura de archivos
-        //     vi.spyOn(fs.promises, "writeFile").mockResolvedValue(undefined);
-        //     vi.spyOn(fs.promises, "readFile").mockResolvedValue(Buffer.from("%PDF-1.4\n%Hello, this is a simulated PDF file"));
+        //     const writeFileMock = vi.spyOn(fs, "writeFile").mockResolvedValue(undefined);
+        //     const readFileMock = vi.spyOn(fs, "readFile").mockResolvedValue(Buffer.from(fileContent));
         
-        //     // Llamar al método upload
-        //     const result = await documentService.upload(`data:application/pdf;base64,${validBase64File}`);
-        //     expect(result).toContain("uploads/");
+        //     try {
+        //         // Llamar al método upload
+        //         const result = await documentService.upload(base64String);
+        
+        //         // Verificar que el path retornado contenga 'uploads/'
+        //         expect(result).toContain("uploads/");
+        
+        //         // Asegurarse de que se hayan llamado las funciones de escritura/lectura
+        //         expect(writeFileMock).toHaveBeenCalled();
+        //         expect(readFileMock).toHaveBeenCalled();
+        //     } catch (error) {
+        //         console.error("Error during upload:", error);
+        //         throw error;
+        //     } finally {
+        //         // Limpiar los mocks después del test
+        //         writeFileMock.mockRestore();
+        //         readFileMock.mockRestore();
+        //     }
         // });
+        
+        
+        
     });
 
     describe("createDocument", () => {
@@ -257,26 +277,44 @@ describe("DocumentService Tests", () => {
         // it("should create a document successfully when valid data is provided", async () => {
         //     // Simular un archivo PDF válido con una cabecera real
         //     const validBase64File = Buffer.from("%PDF-1.4\n%Hello, this is a simulated PDF file").toString("base64");
+        //     const base64String = `data:application/pdf;base64,${validBase64File}`;
         
         //     // Mockear las operaciones de escritura y lectura de archivos
-        //     vi.spyOn(fs.promises, "writeFile").mockResolvedValue(undefined);
-        //     vi.spyOn(fs.promises, "readFile").mockResolvedValue(Buffer.from("%PDF-1.4\n%Hello, this is a simulated PDF file"));
+        //     const writeFileMock = vi.spyOn(fs, "writeFile").mockResolvedValue(undefined);
+        //     const readFileMock = vi.spyOn(fs, "readFile").mockResolvedValue(Buffer.from("%PDF-1.4\n%Hello, this is a simulated PDF file"));
         
-        //     // Llamar al método createDocument
-        //     const result = await documentService.createDocument(
-        //         "123",
-        //         "456",
-        //         "789",
-        //         `data:application/pdf;base64,${validBase64File}`
-        //     );
+        //     try {
+        //         // Llamar al método createDocument
+        //         const result = await documentService.createDocument(
+        //             "123",      // owner
+        //             "456",      // tenant
+        //             "789",      // unit
+        //             base64String // archivo PDF en base64
+        //         );
         
-        //     // Verificar el resultado
-        //     expect(result).toBeDefined();
-        //     expect(result.owner).toBe("123");
-        //     expect(result.tenant).toBe("456");
-        //     expect(result.unit).toBe("789");
-        //     expect(result.path).toContain("uploads/");
+        //         // Verificar que el resultado esté definido y tenga los campos esperados
+        //         expect(result).toBeDefined();
+        //         expect(result.owner).toBe("123");
+        //         expect(result.tenant).toBe("456");
+        //         expect(result.unit).toBe("789");
+        
+        //         // Verificar que la ruta del archivo contenga "uploads/"
+        //         expect(result.path).toContain("uploads/");
+        
+        //         // Verificar que las funciones de lectura y escritura fueron llamadas
+        //         expect(writeFileMock).toHaveBeenCalled();
+        //         expect(readFileMock).toHaveBeenCalled();
+        
+        //     } catch (error) {
+        //         console.error("Error during document creation:", error);
+        //         throw error;
+        //     } finally {
+        //         // Limpiar los mocks después del test
+        //         writeFileMock.mockRestore();
+        //         readFileMock.mockRestore();
+        //     }
         // });
+        
     });
 
     describe("getDocumentsByUserId", () => {
