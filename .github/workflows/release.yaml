@@ -6,15 +6,11 @@ on:
     types:
       - completed
     branches:
-      - main  # Only trigger on the main branch
+      - main
 
 permissions:
   contents: write
   pull-requests: write
-
-defaults:
-  run:
-    working-directory: ./code  # Root directory of your code
 
 jobs:
   release:
@@ -29,4 +25,4 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           release-type: node
-          path: ./code
+          path: code 
