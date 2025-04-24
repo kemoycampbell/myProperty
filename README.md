@@ -137,7 +137,7 @@ The application follows the **Model-View-Controller (MVC)** architecture design 
 3. The model queries or updates the database and returns a response.
 4. The controller sends the response back to the view, and the UI is updated accordingly.
 
-![This is an image of the architecture](images/architecture.png "Architecture Diagram")
+![This is an image of the architecture](docs/images/architecture.png "Architecture Diagram")
 
 #### Components and their responsibilities:
 
@@ -159,4 +159,4 @@ The application follows the **Model-View-Controller (MVC)** architecture design 
 
 
 ### Use Cases
-![This is an image of the use cases](images/usecases.png "Use Cases")
+![This is an image of the use cases](docs/images/usecases.png "Use Cases")
